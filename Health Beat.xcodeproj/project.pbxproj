@@ -1,0 +1,467 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		347770CE143EC5180010DCAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 347770CD143EC5180010DCAB /* UIKit.framework */; };
+		347770D0143EC5180010DCAB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 347770CF143EC5180010DCAB /* Foundation.framework */; };
+		347770D2143EC5180010DCAB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 347770D1143EC5180010DCAB /* CoreGraphics.framework */; };
+		347770D8143EC5180010DCAB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 347770D6143EC5180010DCAB /* InfoPlist.strings */; };
+		347770DA143EC5180010DCAB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 347770D9143EC5180010DCAB /* main.m */; };
+		347770DE143EC5180010DCAB /* HBAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 347770DD143EC5180010DCAB /* HBAppDelegate.m */; };
+		347770E1143EC5180010DCAB /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 347770DF143EC5180010DCAB /* MainStoryboard.storyboard */; };
+		347770E4143EC5180010DCAB /* HBFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 347770E3143EC5180010DCAB /* HBFirstViewController.m */; };
+		347770E6143EC5180010DCAB /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 347770E5143EC5180010DCAB /* first.png */; };
+		347770E8143EC5180010DCAB /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 347770E7143EC5180010DCAB /* first@2x.png */; };
+		347770EB143EC5180010DCAB /* HBSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 347770EA143EC5180010DCAB /* HBSecondViewController.m */; };
+		347770ED143EC5180010DCAB /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 347770EC143EC5180010DCAB /* second.png */; };
+		347770EF143EC5180010DCAB /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 347770EE143EC5180010DCAB /* second@2x.png */; };
+		347770F7143EC5190010DCAB /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 347770F6143EC5190010DCAB /* SenTestingKit.framework */; };
+		347770F8143EC5190010DCAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 347770CD143EC5180010DCAB /* UIKit.framework */; };
+		347770F9143EC5190010DCAB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 347770CF143EC5180010DCAB /* Foundation.framework */; };
+		34777101143EC5190010DCAB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 347770FF143EC5190010DCAB /* InfoPlist.strings */; };
+		34777104143EC5190010DCAB /* Health_BeatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34777103143EC5190010DCAB /* Health_BeatTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		347770FA143EC5190010DCAB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 347770C0143EC5180010DCAB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 347770C8143EC5180010DCAB;
+			remoteInfo = "Health Beat";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		347770C9143EC5180010DCAB /* Health Beat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Health Beat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		347770CD143EC5180010DCAB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		347770CF143EC5180010DCAB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		347770D1143EC5180010DCAB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		347770D5143EC5180010DCAB /* Health Beat-Info.plist */ = {isa = PBXFileReference; path = "Health Beat-Info.plist"; sourceTree = "<group>"; };
+		347770D7143EC5180010DCAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		347770D9143EC5180010DCAB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		347770DB143EC5180010DCAB /* Health Beat-Prefix.pch */ = {isa = PBXFileReference; path = "Health Beat-Prefix.pch"; sourceTree = "<group>"; };
+		347770DC143EC5180010DCAB /* HBAppDelegate.h */ = {isa = PBXFileReference; path = HBAppDelegate.h; sourceTree = "<group>"; };
+		347770DD143EC5180010DCAB /* HBAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBAppDelegate.m; sourceTree = "<group>"; };
+		347770E0143EC5180010DCAB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		347770E2143EC5180010DCAB /* HBFirstViewController.h */ = {isa = PBXFileReference; path = HBFirstViewController.h; sourceTree = "<group>"; };
+		347770E3143EC5180010DCAB /* HBFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBFirstViewController.m; sourceTree = "<group>"; };
+		347770E5143EC5180010DCAB /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		347770E7143EC5180010DCAB /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		347770E9143EC5180010DCAB /* HBSecondViewController.h */ = {isa = PBXFileReference; path = HBSecondViewController.h; sourceTree = "<group>"; };
+		347770EA143EC5180010DCAB /* HBSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HBSecondViewController.m; sourceTree = "<group>"; };
+		347770EC143EC5180010DCAB /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		347770EE143EC5180010DCAB /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		347770F5143EC5190010DCAB /* Health BeatTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Health BeatTests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		347770F6143EC5190010DCAB /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		347770FE143EC5190010DCAB /* Health BeatTests-Info.plist */ = {isa = PBXFileReference; path = "Health BeatTests-Info.plist"; sourceTree = "<group>"; };
+		34777100143EC5190010DCAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		34777102143EC5190010DCAB /* Health_BeatTests.h */ = {isa = PBXFileReference; path = Health_BeatTests.h; sourceTree = "<group>"; };
+		34777103143EC5190010DCAB /* Health_BeatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Health_BeatTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		347770C6143EC5180010DCAB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				347770CE143EC5180010DCAB /* UIKit.framework in Frameworks */,
+				347770D0143EC5180010DCAB /* Foundation.framework in Frameworks */,
+				347770D2143EC5180010DCAB /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		347770F1143EC5190010DCAB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				347770F7143EC5190010DCAB /* SenTestingKit.framework in Frameworks */,
+				347770F8143EC5190010DCAB /* UIKit.framework in Frameworks */,
+				347770F9143EC5190010DCAB /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		347770BE143EC5180010DCAB = {
+			isa = PBXGroup;
+			children = (
+				347770D3143EC5180010DCAB /* Health Beat */,
+				347770FC143EC5190010DCAB /* Health BeatTests */,
+				347770CC143EC5180010DCAB /* Frameworks */,
+				347770CA143EC5180010DCAB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		347770CA143EC5180010DCAB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				347770C9143EC5180010DCAB /* Health Beat.app */,
+				347770F5143EC5190010DCAB /* Health BeatTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		347770CC143EC5180010DCAB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				347770CD143EC5180010DCAB /* UIKit.framework */,
+				347770CF143EC5180010DCAB /* Foundation.framework */,
+				347770D1143EC5180010DCAB /* CoreGraphics.framework */,
+				347770F6143EC5190010DCAB /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		347770D3143EC5180010DCAB /* Health Beat */ = {
+			isa = PBXGroup;
+			children = (
+				347770DC143EC5180010DCAB /* HBAppDelegate.h */,
+				347770DD143EC5180010DCAB /* HBAppDelegate.m */,
+				347770DF143EC5180010DCAB /* MainStoryboard.storyboard */,
+				347770E2143EC5180010DCAB /* HBFirstViewController.h */,
+				347770E3143EC5180010DCAB /* HBFirstViewController.m */,
+				347770E5143EC5180010DCAB /* first.png */,
+				347770E7143EC5180010DCAB /* first@2x.png */,
+				347770E9143EC5180010DCAB /* HBSecondViewController.h */,
+				347770EA143EC5180010DCAB /* HBSecondViewController.m */,
+				347770EC143EC5180010DCAB /* second.png */,
+				347770EE143EC5180010DCAB /* second@2x.png */,
+				347770D4143EC5180010DCAB /* Supporting Files */,
+			);
+			path = "Health Beat";
+			sourceTree = "<group>";
+		};
+		347770D4143EC5180010DCAB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				347770D5143EC5180010DCAB /* Health Beat-Info.plist */,
+				347770D6143EC5180010DCAB /* InfoPlist.strings */,
+				347770D9143EC5180010DCAB /* main.m */,
+				347770DB143EC5180010DCAB /* Health Beat-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		347770FC143EC5190010DCAB /* Health BeatTests */ = {
+			isa = PBXGroup;
+			children = (
+				34777102143EC5190010DCAB /* Health_BeatTests.h */,
+				34777103143EC5190010DCAB /* Health_BeatTests.m */,
+				347770FD143EC5190010DCAB /* Supporting Files */,
+			);
+			path = "Health BeatTests";
+			sourceTree = "<group>";
+		};
+		347770FD143EC5190010DCAB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				347770FE143EC5190010DCAB /* Health BeatTests-Info.plist */,
+				347770FF143EC5190010DCAB /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		347770C8143EC5180010DCAB /* Health Beat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 34777107143EC5190010DCAB /* Build configuration list for PBXNativeTarget "Health Beat" */;
+			buildPhases = (
+				347770C5143EC5180010DCAB /* Sources */,
+				347770C6143EC5180010DCAB /* Frameworks */,
+				347770C7143EC5180010DCAB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Health Beat";
+			productName = "Health Beat";
+			productReference = 347770C9143EC5180010DCAB /* Health Beat.app */;
+			productType = "com.apple.product-type.application";
+		};
+		347770F4143EC5190010DCAB /* Health BeatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3477710A143EC5190010DCAB /* Build configuration list for PBXNativeTarget "Health BeatTests" */;
+			buildPhases = (
+				347770F0143EC5190010DCAB /* Sources */,
+				347770F1143EC5190010DCAB /* Frameworks */,
+				347770F2143EC5190010DCAB /* Resources */,
+				347770F3143EC5190010DCAB /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				347770FB143EC5190010DCAB /* PBXTargetDependency */,
+			);
+			name = "Health BeatTests";
+			productName = "Health BeatTests";
+			productReference = 347770F5143EC5190010DCAB /* Health BeatTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		347770C0143EC5180010DCAB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Freelance Mad Science Labs";
+			};
+			buildConfigurationList = 347770C3143EC5180010DCAB /* Build configuration list for PBXProject "Health Beat" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 347770BE143EC5180010DCAB;
+			productRefGroup = 347770CA143EC5180010DCAB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				347770C8143EC5180010DCAB /* Health Beat */,
+				347770F4143EC5190010DCAB /* Health BeatTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		347770C7143EC5180010DCAB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				347770D8143EC5180010DCAB /* InfoPlist.strings in Resources */,
+				347770E1143EC5180010DCAB /* MainStoryboard.storyboard in Resources */,
+				347770E6143EC5180010DCAB /* first.png in Resources */,
+				347770E8143EC5180010DCAB /* first@2x.png in Resources */,
+				347770ED143EC5180010DCAB /* second.png in Resources */,
+				347770EF143EC5180010DCAB /* second@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		347770F2143EC5190010DCAB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34777101143EC5190010DCAB /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		347770F3143EC5190010DCAB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		347770C5143EC5180010DCAB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				347770DA143EC5180010DCAB /* main.m in Sources */,
+				347770DE143EC5180010DCAB /* HBAppDelegate.m in Sources */,
+				347770E4143EC5180010DCAB /* HBFirstViewController.m in Sources */,
+				347770EB143EC5180010DCAB /* HBSecondViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		347770F0143EC5190010DCAB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				34777104143EC5190010DCAB /* Health_BeatTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		347770FB143EC5190010DCAB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 347770C8143EC5180010DCAB /* Health Beat */;
+			targetProxy = 347770FA143EC5190010DCAB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		347770D6143EC5180010DCAB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				347770D7143EC5180010DCAB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		347770DF143EC5180010DCAB /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				347770E0143EC5180010DCAB /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			sourceTree = "<group>";
+		};
+		347770FF143EC5190010DCAB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				34777100143EC5190010DCAB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		34777105143EC5190010DCAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		34777106143EC5190010DCAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		34777108143EC5190010DCAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Health Beat/Health Beat-Prefix.pch";
+				INFOPLIST_FILE = "Health Beat/Health Beat-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		34777109143EC5190010DCAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Health Beat/Health Beat-Prefix.pch";
+				INFOPLIST_FILE = "Health Beat/Health Beat-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		3477710B143EC5190010DCAB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Health Beat.app/Health Beat";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Health Beat/Health Beat-Prefix.pch";
+				INFOPLIST_FILE = "Health BeatTests/Health BeatTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		3477710C143EC5190010DCAB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Health Beat.app/Health Beat";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Health Beat/Health Beat-Prefix.pch";
+				INFOPLIST_FILE = "Health BeatTests/Health BeatTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		347770C3143EC5180010DCAB /* Build configuration list for PBXProject "Health Beat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34777105143EC5190010DCAB /* Debug */,
+				34777106143EC5190010DCAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		34777107143EC5190010DCAB /* Build configuration list for PBXNativeTarget "Health Beat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				34777108143EC5190010DCAB /* Debug */,
+				34777109143EC5190010DCAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		3477710A143EC5190010DCAB /* Build configuration list for PBXNativeTarget "Health BeatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3477710B143EC5190010DCAB /* Debug */,
+				3477710C143EC5190010DCAB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 347770C0143EC5180010DCAB /* Project object */;
+}
