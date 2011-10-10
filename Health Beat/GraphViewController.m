@@ -7,7 +7,13 @@
 //
 
 #import "GraphViewController.h"
+#import "GraphView.h"
 #import "WeightHistory.h"
+
+static NSString* const WeightKey = @"weights";
+static NSString* const UnitsKey = @"defaultUnits";
+
+
 
 @implementation GraphViewController
 
@@ -39,25 +45,65 @@
 }
 */
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    id graphView = self.view;    
+    
+    [graphView setWeightEntries:self.weightHistory.weights 
+                       andUnits:self.weightHistory.defaultUnits];
+    
+    // Watch weight history for changes.
+    [self.weightHistory addObserver:self 
+                         forKeyPath:WeightKey 
+                            options:NSKeyValueObservingOptionNew 
+                            context:nil];
+    
+    [self. weightHistory addObserver:self
+                          forKeyPath:UnitsKey 
+                             options:NSKeyValueObservingOptionNew 
+                             context:nil];
 }
-*/
+
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
+    
+    [self.weightHistory removeObserver:self forKeyPath:WeightKey];
+    [self.weightHistory removeObserver:self forKeyPath:UnitsKey];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     
     return YES;
+}
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation) toInterfaceOrientation 
+                                          duration:(NSTimeInterval)duration {
+    
+    [self.view setNeedsDisplay];
+}
+
+#pragma mark - Notification Methods
+
+- (void)observeValueForKeyPath:(NSString *)keyPath 
+                      ofObject:(id)object 
+                        change:(NSDictionary *)change 
+                       context:(void *)context {
+    
+    if ([keyPath isEqualToString:WeightKey]|| 
+        [keyPath isEqualToString:UnitsKey]) {
+        
+        id graphView = self.view;
+        
+        [graphView setWeightEntries:self.weightHistory.weights 
+                           andUnits:self.weightHistory.defaultUnits];
+    }
 }
 
 @end

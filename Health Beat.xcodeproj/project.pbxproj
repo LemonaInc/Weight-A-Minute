@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		340C102014432FD600F1D711 /* GraphStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 340C101F14432FD600F1D711 /* GraphStats.m */; };
+		340C1024144333E300F1D711 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 340C1023144333E300F1D711 /* GraphView.m */; };
 		343A73C9143FAD13002EB781 /* graph.png in Resources */ = {isa = PBXBuildFile; fileRef = 343A73C5143FAD13002EB781 /* graph.png */; };
 		343A73CA143FAD13002EB781 /* graph@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 343A73C6143FAD13002EB781 /* graph@2x.png */; };
 		343A73CB143FAD13002EB781 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 343A73C7143FAD13002EB781 /* plus.png */; };
@@ -46,6 +48,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		340C101E14432FD600F1D711 /* GraphStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphStats.h; sourceTree = "<group>"; };
+		340C101F14432FD600F1D711 /* GraphStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphStats.m; sourceTree = "<group>"; };
+		340C1022144333E300F1D711 /* GraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
+		340C1023144333E300F1D711 /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
 		343A73C5143FAD13002EB781 /* graph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graph.png; sourceTree = "<group>"; };
 		343A73C6143FAD13002EB781 /* graph@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "graph@2x.png"; sourceTree = "<group>"; };
 		343A73C7143FAD13002EB781 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
@@ -116,7 +122,6 @@
 		347770BE143EC5180010DCAB = {
 			isa = PBXGroup;
 			children = (
-				344439C31442514800B2DEA3 /* QuartzCore.framework */,
 				347770D3143EC5180010DCAB /* Health Beat */,
 				347770FC143EC5190010DCAB /* Health BeatTests */,
 				347770CC143EC5180010DCAB /* Frameworks */,
@@ -136,6 +141,7 @@
 		347770CC143EC5180010DCAB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				344439C31442514800B2DEA3 /* QuartzCore.framework */,
 				347770CD143EC5180010DCAB /* UIKit.framework */,
 				347770CF143EC5180010DCAB /* Foundation.framework */,
 				347770D1143EC5180010DCAB /* CoreGraphics.framework */,
@@ -216,6 +222,10 @@
 			children = (
 				344439CD144285C500B2DEA3 /* HistoryCell.h */,
 				344439CE144285C500B2DEA3 /* HistoryCell.m */,
+				340C101E14432FD600F1D711 /* GraphStats.h */,
+				340C101F14432FD600F1D711 /* GraphStats.m */,
+				340C1022144333E300F1D711 /* GraphView.h */,
+				340C1023144333E300F1D711 /* GraphView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -361,6 +371,8 @@
 				3490AD7F143FFBE8006ECA28 /* TabBarController.m in Sources */,
 				344439C114416C7A00B2DEA3 /* UnitSelectorViewController.m in Sources */,
 				344439CF144285C500B2DEA3 /* HistoryCell.m in Sources */,
+				340C102014432FD600F1D711 /* GraphStats.m in Sources */,
+				340C1024144333E300F1D711 /* GraphView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
