@@ -13,6 +13,11 @@
 
 @synthesize weightHistory = _weightHistory;
 @synthesize selectedIndex = _selectedIndex;
+@synthesize weightTextField = _weightTextField;
+@synthesize dateTextField = _dateTextField;
+@synthesize averageTextField = _averageTextField;
+@synthesize lossTextField = _lossTextField;
+@synthesize gainTextField = _gainTextField;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -46,6 +51,11 @@
 
 - (void)viewDidUnload
 {
+    [self setWeightTextField:nil];
+    [self setDateTextField:nil];
+    [self setAverageTextField:nil];
+    [self setLossTextField:nil];
+    [self setGainTextField:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -53,7 +63,84 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidAppear:animated];
+    
+    WeightUnit unit = self.weightHistory.defaultUnits;
+    
+    WeightEntry* currentEntry = 
+    [self.weightHistory.weights objectAtIndex:self.selectedIndex];
+    
+    CGFloat weight = [currentEntry weightInUnit:unit];
+    
+    // If the entry is within the same month.
+    NSDate* startOfMonth;
+    NSTimeInterval monthLength;
+    
+    [[NSCalendar currentCalendar] rangeOfUnit:NSMonthCalendarUnit
+                                    startDate:&startOfMonth 
+                                     interval:&monthLength 
+                                      forDate:currentEntry.date];
+    
+    
+    CGFloat minWeight = CGFLOAT_MAX;
+    CGFloat maxWeight = CGFLOAT_MIN;
+    int monthlyCount = 0;
+    CGFloat monthlyTotal = 0.0f;
+    
+    for (WeightEntry* entry in self.weightHistory.weights) {
+        
+        CGFloat sampleWeight = [entry weightInUnit:unit];
+        
+        if (sampleWeight < minWeight) minWeight = sampleWeight;
+        if (sampleWeight > maxWeight) maxWeight = sampleWeight;
+        
+        // Check to see if it's in the same month.
+        NSTimeInterval timeFromStartOfMonth = 
+        [entry.date timeIntervalSinceDate:startOfMonth];
+        
+        if (timeFromStartOfMonth > 0 && 
+            timeFromStartOfMonth <= monthLength) {
+            
+            monthlyTotal += sampleWeight;
+            monthlyCount++;
+        }
+    }
+    
+    CGFloat monthlyAverage = monthlyTotal / (float)monthlyCount;
+    
+    // Now fill in our values.
+    self.weightTextField.text = 
+    [WeightEntry stringForWeightInLbs:weight inUnit:unit];
+    
+    
+    if (weight < monthlyAverage) {
+        self.weightTextField.textColor = [UIColor colorWithRed:0.0f 
+                                                         green:0.5f 
+                                                          blue:0.0f 
+                                                         alpha:1.0f];
+    }
+    
+    if (weight > monthlyAverage) {
+        self.weightTextField.textColor = [UIColor colorWithRed:0.5f 
+                                                         green:0.0f 
+                                                          blue:0.0f 
+                                                         alpha:1.0f];
+    }
+    
+    self.dateTextField.text = 
+    [NSDateFormatter localizedStringFromDate:currentEntry.date
+                                   dateStyle:NSDateFormatterShortStyle
+                                   timeStyle:NSDateFormatterShortStyle];
+    
+    self.averageTextField.text = 
+    [WeightEntry stringForWeightInLbs:monthlyAverage inUnit:unit];
+    
+    self.lossTextField.text = 
+    [WeightEntry stringForWeightInLbs:maxWeight - weight inUnit:unit];
+    
+    self.gainTextField.text = 
+    [WeightEntry stringForWeightInLbs:weight - minWeight inUnit:unit];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -74,82 +161,13 @@
     [super viewDidDisappear:animated];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (BOOL)shouldAutorotateToInterfaceOrientation:
+(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // TODO temporary code to get the interface to run
     
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // TODO temporary code to get the interface to run
-    
-    // Return the number of rows in the section.
-    return 1;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Detail Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    
-    // Configure the cell...
-    
-    return cell;
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 

@@ -15,4 +15,12 @@
 @property (nonatomic, strong) WeightHistory* weightHistory;
 @property (nonatomic, assign) NSUInteger selectedIndex;
 
+
+@property (strong, nonatomic) IBOutlet UITextField *weightTextField;
+@property (strong, nonatomic) IBOutlet UITextField *dateTextField;
+@property (strong, nonatomic) IBOutlet UITextField *averageTextField;
+@property (strong, nonatomic) IBOutlet UITextField *lossTextField;
+@property (strong, nonatomic) IBOutlet UITextField *gainTextField;
+
+
 @end
