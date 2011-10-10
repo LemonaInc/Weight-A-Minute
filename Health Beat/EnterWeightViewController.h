@@ -7,11 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UnitSelectorViewController.h"
 
 @class WeightHistory;
 
-@interface EnterWeightViewController : UIViewController
+@interface EnterWeightViewController : UIViewController 
+<UITextFieldDelegate, UnitSelectorViewControllerDelegate> 
 
 @property (nonatomic, strong) WeightHistory* weightHistory;
+@property (strong, nonatomic) IBOutlet UITextField *weightTextField;
+@property (strong, nonatomic) IBOutlet UILabel *dateLabel;
+@property (strong, nonatomic) UIButton* unitsButton;
+
+- (IBAction)saveWeight:(id)sender;
+- (IBAction)changeUnits:(id)sender;
+- (IBAction)handleDownwardSwipe:(id)sender;
+- (IBAction)handleUpwardSwipe:(id)sender;
 
 @end

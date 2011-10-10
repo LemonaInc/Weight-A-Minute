@@ -15,6 +15,9 @@
 		343A73D2143FB042002EB781 /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 343A73D1143FB042002EB781 /* GraphViewController.m */; };
 		343A73D5143FB17D002EB781 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 343A73D4143FB17D002EB781 /* HistoryViewController.m */; };
 		343A73D8143FB1F4002EB781 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 343A73D7143FB1F4002EB781 /* DetailViewController.m */; };
+		344439C114416C7A00B2DEA3 /* UnitSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 344439C014416C7A00B2DEA3 /* UnitSelectorViewController.m */; };
+		344439C41442514800B2DEA3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 344439C31442514800B2DEA3 /* QuartzCore.framework */; };
+		344439CF144285C500B2DEA3 /* HistoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 344439CE144285C500B2DEA3 /* HistoryCell.m */; };
 		347770CE143EC5180010DCAB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 347770CD143EC5180010DCAB /* UIKit.framework */; };
 		347770D0143EC5180010DCAB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 347770CF143EC5180010DCAB /* Foundation.framework */; };
 		347770D2143EC5180010DCAB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 347770D1143EC5180010DCAB /* CoreGraphics.framework */; };
@@ -55,6 +58,11 @@
 		343A73D4143FB17D002EB781 /* HistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
 		343A73D6143FB1F4002EB781 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		343A73D7143FB1F4002EB781 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		344439BF14416C7A00B2DEA3 /* UnitSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnitSelectorViewController.h; sourceTree = "<group>"; };
+		344439C014416C7A00B2DEA3 /* UnitSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UnitSelectorViewController.m; sourceTree = "<group>"; };
+		344439C31442514800B2DEA3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		344439CD144285C500B2DEA3 /* HistoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HistoryCell.h; sourceTree = "<group>"; };
+		344439CE144285C500B2DEA3 /* HistoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HistoryCell.m; sourceTree = "<group>"; };
 		347770C9143EC5180010DCAB /* Health Beat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Health Beat.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		347770CD143EC5180010DCAB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		347770CF143EC5180010DCAB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -85,6 +93,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				344439C41442514800B2DEA3 /* QuartzCore.framework in Frameworks */,
 				347770CE143EC5180010DCAB /* UIKit.framework in Frameworks */,
 				347770D0143EC5180010DCAB /* Foundation.framework in Frameworks */,
 				347770D2143EC5180010DCAB /* CoreGraphics.framework in Frameworks */,
@@ -107,6 +116,7 @@
 		347770BE143EC5180010DCAB = {
 			isa = PBXGroup;
 			children = (
+				344439C31442514800B2DEA3 /* QuartzCore.framework */,
 				347770D3143EC5180010DCAB /* Health Beat */,
 				347770FC143EC5190010DCAB /* Health BeatTests */,
 				347770CC143EC5180010DCAB /* Frameworks */,
@@ -204,6 +214,8 @@
 		3477710F143EC9930010DCAB /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				344439CD144285C500B2DEA3 /* HistoryCell.h */,
+				344439CE144285C500B2DEA3 /* HistoryCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -221,6 +233,8 @@
 				343A73D7143FB1F4002EB781 /* DetailViewController.m */,
 				3490AD7D143FFBE8006ECA28 /* TabBarController.h */,
 				3490AD7E143FFBE8006ECA28 /* TabBarController.m */,
+				344439BF14416C7A00B2DEA3 /* UnitSelectorViewController.h */,
+				344439C014416C7A00B2DEA3 /* UnitSelectorViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -345,6 +359,8 @@
 				3490AD75143FF1D3006ECA28 /* WeightEntry.m in Sources */,
 				3490AD79143FF56C006ECA28 /* WeightHistory.m in Sources */,
 				3490AD7F143FFBE8006ECA28 /* TabBarController.m in Sources */,
+				344439C114416C7A00B2DEA3 /* UnitSelectorViewController.m in Sources */,
+				344439CF144285C500B2DEA3 /* HistoryCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

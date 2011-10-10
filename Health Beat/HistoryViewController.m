@@ -9,8 +9,16 @@
 #import "HistoryViewController.h"
 #import "WeightHistory.h"
 #import "DetailViewController.h"
+#import "HistoryCell.h"
 
 static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
+
+@interface HistoryViewController()
+
+- (void)reloadTableData;
+- (void)weightHistoryChanged:(NSDictionary*) change;
+
+@end
 
 
 
@@ -47,13 +55,29 @@ static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    // Register to receive KVO messages when the weight history changes.
+    [self.weightHistory addObserver:self 
+                         forKeyPath:KVOWeightChangeKey 
+                            options:NSKeyValueObservingOptionNew
+                            context:nil];
+    
+    // Register to receive messages when the default units change.
+    [[NSNotificationCenter defaultCenter] 
+     addObserver:self 
+     selector:@selector(reloadTableData)
+     name:WeightHistoryChangedDefaultUnitsNotification 
+     object:self.weightHistory]; 
 }
 
 - (void)viewDidUnload
 {
+    [self.weightHistory removeObserver:self
+                            forKeyPath:KVOWeightChangeKey]; 
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -78,8 +102,8 @@ static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+
+    return YES;
 }
 
 #pragma mark - Table view data source
@@ -105,16 +129,14 @@ static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
 {
     static NSString *CellIdentifier = @"History Cell";
     
-    UITableViewCell *cell = 
+    HistoryCell *cell = 
     [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] 
-                initWithStyle:UITableViewCellStyleDefault 
-                reuseIdentifier:CellIdentifier];
-    }
+    WeightEntry* entry = 
+    [self.weightHistory.weights objectAtIndex:indexPath.row];
     
-    // Configure the cell...
+    [cell configureWithWeightEntry:entry 
+                      defaultUnits:self.weightHistory.defaultUnits];
     
     return cell;
 }
@@ -182,5 +204,77 @@ static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
+
+#pragma mark - Notification Methods
+
+- (void)observeValueForKeyPath:(NSString *)keyPath 
+                      ofObject:(id)object 
+                        change:(NSDictionary *)change 
+                       context:(void *)context   {
+    
+    if ([keyPath isEqualToString:KVOWeightChangeKey]) {
+        
+        [self weightHistoryChanged:change];
+    }
+}
+
+- (void)weightHistoryChanged:(NSDictionary*) change {
+    
+    // First extract the kind of change.
+    NSNumber* value = [change objectForKey:NSKeyValueChangeKindKey];
+    
+    // Next, get the indexes that changed.
+    NSIndexSet* indexes = 
+    [change objectForKey:NSKeyValueChangeIndexesKey];
+    
+    NSMutableArray* indexPaths = 
+    [[NSMutableArray alloc] initWithCapacity:[indexes count]];
+    
+    // Use a block to process each index.
+    [indexes enumerateIndexesUsingBlock:
+     ^(NSUInteger indexValue, BOOL* stop) {
+         
+         NSIndexPath* indexPath = 
+         [NSIndexPath indexPathForRow:indexValue inSection:0];
+         
+         [indexPaths addObject:indexPath];
+     }];
+    
+    // Now update the table.
+    switch ([value intValue]) {
+            
+        case NSKeyValueChangeInsertion:
+            
+            // Insert the row.
+            [self.tableView insertRowsAtIndexPaths:indexPaths
+                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+            break;
+            
+        case NSKeyValueChangeRemoval:
+            
+            // Delete the row.
+            [self.tableView deleteRowsAtIndexPaths:indexPaths 
+                                  withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+            break;
+            
+        case NSKeyValueChangeSetting:
+            // Index values changed...just ignore.
+            break;
+            
+        default:
+            [NSException raise:NSInvalidArgumentException 
+                        format:@"Change kind value %d not recognized", 
+             [value intValue]];
+            
+    }
+}
+
+- (void)reloadTableData {
+    
+    [self.tableView reloadData];
+}
+
 
 @end
