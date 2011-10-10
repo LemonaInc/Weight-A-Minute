@@ -110,18 +110,16 @@ static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // TODO temporary code to get the interface to run  
     
-    // Return the number of sections.
+    // We only have a single section
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // TODO temporary code to get the interface to run
     
-    // Return the number of rows in the section.
-    return 1;
+    // Return the number of entries in our weight history
+    return [self.weightHistory.weights count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView 
