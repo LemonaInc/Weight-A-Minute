@@ -52,27 +52,39 @@ static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
 
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    // register to recieve notifications when the user defaults change
+    [[NSNotificationCenter defaultCenter] 
+     addObserver:self
+     selector:@selector(reloadTableData)
+     name:NSUserDefaultsDidChangeNotification 
+     object:[NSUserDefaults standardUserDefaults]];
+    
 }
 
 - (void)viewDidUnload
 {
-    
     [super viewDidUnload];
+    
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [self becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self resignFirstResponder];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -114,7 +126,7 @@ static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
     [self.weightHistory.weights objectAtIndex:indexPath.row];
     
     [cell configureWithWeightEntry:entry 
-                      defaultUnits:self.weightHistory.defaultUnits];
+                      defaultUnits:getDefaultUnits()];
     
     return cell;
 }
@@ -236,7 +248,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
             
         case NSKeyValueChangeSetting:
-            // Index values changed...just ignore.
+            [self.tableView reloadData];
             break;
             
         default:
@@ -250,6 +262,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)reloadTableData {
     
     [self.tableView reloadData];
+}
+
+#pragma mark - Responder Events
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    
+    // only respond to shake events
+    if (event.type == UIEventSubtypeMotionShake) {
+        
+        [self.weightHistory undo];
+    }
+}
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
 }
 
 #pragma mark - Custom Accessor

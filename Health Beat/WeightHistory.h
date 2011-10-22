@@ -18,13 +18,14 @@ static NSString* const KVOWeightChangeKey = @"weightHistory";
 typedef void (^historyAccessHandler) (BOOL success, WeightHistory* weightHistory);
 
 
-@interface WeightHistory : UIDocument
+@interface WeightHistory : UIDocument <UIAlertViewDelegate>
 
 // this is a virtual property
 @property (nonatomic, readonly) NSArray* weights;
 
 - (void)addWeight:(WeightEntry*)weight;
 - (void)removeWeightAtIndex:(NSUInteger)index;
+- (void)undo;
 
 + (void)accessWeightHistory:(historyAccessHandler)completionHandler;
 

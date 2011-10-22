@@ -16,7 +16,7 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 @property (nonatomic, strong) NSDate* currentDate;
 @property (nonatomic, strong) NSNumberFormatter* numberFormatter;
 
-- (void)updateSaveAndEditStatus
+- (void)updateSaveAndEditStatus;
 
 @end
 
@@ -94,6 +94,18 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
     
     self.saveWarningLabel.alpha = 0.0f;
     
+    [[NSNotificationCenter defaultCenter]
+     addObserverForName:NSUserDefaultsDidChangeNotification
+     object:[NSUserDefaults standardUserDefaults]
+     queue:nil
+     usingBlock:^(NSNotification *note) {
+         
+         NSString* title = [WeightEntry stringForUnit:getDefaultUnits()];
+         
+         [self.unitsButton setTitle:title
+                           forState:UIControlStateNormal];
+     }];
+    
 }
 
 
@@ -104,11 +116,13 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
     self.unitsButton = nil;
     self.numberFormatter = nil;
     
-    [self setSaveWarning:nil];
     [self setSaveWarningLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -131,6 +145,10 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
     self.weightTextField.text = @"";
     [self.weightTextField becomeFirstResponder];
     
+    [self.unitsButton 
+     setTitle:[WeightEntry stringForUnit:getDefaultUnits()] 
+     forState:UIControlStateNormal];
+    
     [super viewWillAppear:animated];
 }
 
@@ -144,7 +162,7 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
     
     WeightEntry* entry = [[WeightEntry alloc] 
                           initWithWeight:[weight floatValue] 
-                          usingUnits:self.weightHistory.defaultUnits 
+                          usingUnits:getDefaultUnits()
                           forDate:self.currentDate];
     
     [self.weightHistory addWeight:entry];
@@ -213,14 +231,14 @@ replacementString:(NSString *)string {
         
         unitSelectorController.delegate = self;
         unitSelectorController.defaultUnit = 
-        self.weightHistory.defaultUnits;
+        getDefaultUnits();
     }
 }
 
 -(void)unitSelector:(UnitSelectorViewController*) sender 
        changedUnits:(WeightUnit)unit {
     
-    self.weightHistory.defaultUnits = unit;
+    setDefaultUnits(unit);
     
     [self.unitsButton setTitle: [WeightEntry stringForUnit:unit]
                       forState:UIControlStateNormal];    
@@ -229,6 +247,44 @@ replacementString:(NSString *)string {
 -(void)unitSelectorDone:(UnitSelectorViewController*) sender {
     
     [self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - Custom Accessor
+
+- (void)setWeightHistory:(WeightHistory *)weightHistory {
+    
+    NSNotificationCenter* notificationCenter = 
+    [NSNotificationCenter defaultCenter];
+    
+    // if we're assiging the same history, don't do anything.
+    if ([_weightHistory isEqual:weightHistory]) {
+        return;
+    }
+    
+    // clear any notifications for the old history, if any
+    if (_weightHistory != nil) {
+        
+        [notificationCenter 
+         removeObserver:self 
+         forKeyPath:UIDocumentStateChangedNotification];
+    }
+    
+    _weightHistory = weightHistory;
+    
+    // add new notifications for the new history, if any
+    // and set the view's values.
+    if (_weightHistory != nil) {
+        
+        // register for notifications
+        [notificationCenter
+         addObserver:self
+         selector:@selector(updateSaveAndEditStatus)
+         name:UIDocumentStateChangedNotification 
+         object:_weightHistory];
+        
+        // update our save and edit status
+        [self updateSaveAndEditStatus];
+    }
 }
 
 #pragma mark - Private Methods

@@ -65,7 +65,7 @@
 {
     [super viewDidAppear:animated];
     
-    WeightUnit unit = self.weightHistory.defaultUnits;
+    WeightUnit unit = getDefaultUnits();
     
     WeightEntry* currentEntry = 
     [self.weightHistory.weights objectAtIndex:self.selectedIndex];

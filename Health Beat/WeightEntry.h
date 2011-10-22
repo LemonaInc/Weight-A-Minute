@@ -8,13 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef enum {
-    LBS,
-    KG
-} WeightUnit;
-
-
-
 @interface WeightEntry : NSObject <NSCoding>
 
 @property (nonatomic, assign, readonly) CGFloat weightInLbs;

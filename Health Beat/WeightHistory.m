@@ -94,11 +94,27 @@ static NSString* const FileName = @"health_beat.hbhistory";
         
         // set an initial defaults
         _weightHistory = [[NSMutableArray alloc] init];
+        
+        // monitor document state
+        [[NSNotificationCenter defaultCenter] 
+         addObserver:self 
+         selector:@selector(documentStateChanged:) 
+         name:UIDocumentStateChangedNotification
+         object:self];
     }
     
     return self;
 }
 
+- (void)dealloc {
+    
+    // unregister for notifications
+    
+    [[NSNotificationCenter defaultCenter] 
+     removeObserver:self
+     name:UIDocumentStateChangedNotification
+     object:self];
+}
 
 #pragma mark - public methods
 
@@ -208,6 +224,54 @@ static NSString* const FileName = @"health_beat.hbhistory";
     valuesAtIndexes:[NSIndexSet indexSetWithIndex:info.index]
              forKey:KVOWeightChangeKey];
     
+}
+
+- (void)undo {
+    
+    if ([self.undoManager canUndo]) {
+        
+        NSString* title = @"Confirm Undo";
+        
+        NSString* message = 
+        [self.undoManager undoActionName];
+        
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message 
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel" 
+                                              otherButtonTitles:@"Undo",
+                              nil];
+        
+        [alert show];
+        
+    }
+    else {
+        
+        NSString* title = @"Cannot Undo";
+        
+        NSString* message = 
+        @"There are no changes that can be undone at this time.";
+        
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message 
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK" 
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+
+# pragma mark - alert view delegate methods
+
+- (void)alertView:(UIAlertView *)alertView 
+didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    
+    // undo the last action if it is confirmed
+    if (buttonIndex == 1) {
+        
+        [self.undoManager undo];
+    }
 }
 
 #pragma mark - iCloud Methods
@@ -417,6 +481,7 @@ static NSString* const FileName = @"health_beat.hbhistory";
               [writeError localizedDescription]);
     }
 }
+
 
 #pragma mark - Conveniance Methods
 

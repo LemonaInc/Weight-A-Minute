@@ -11,9 +11,6 @@
 #import "WeightHistory.h"
 
 static NSString* const WeightKey = @"weights";
-static NSString* const UnitsKey = @"defaultUnits";
-
-
 
 @implementation GraphViewController
 
@@ -54,18 +51,18 @@ static NSString* const UnitsKey = @"defaultUnits";
     id graphView = self.view;    
     
     [graphView setWeightEntries:self.weightHistory.weights 
-                       andUnits:self.weightHistory.defaultUnits];
+                       andUnits:getDefaultUnits()];
     
-    // Watch weight history for changes.
-    [self.weightHistory addObserver:self 
-                         forKeyPath:WeightKey 
-                            options:NSKeyValueObservingOptionNew 
-                            context:nil];
-    
-    [self. weightHistory addObserver:self
-                          forKeyPath:UnitsKey 
-                             options:NSKeyValueObservingOptionNew 
-                             context:nil];
+    // register to recieve notifications when the default unit changes
+    [[NSNotificationCenter defaultCenter]
+     addObserverForName:NSUserDefaultsDidChangeNotification
+     object:[NSUserDefaults standardUserDefaults] 
+     queue:nil
+     usingBlock:^(NSNotification *note) {
+         
+         [graphView setWeightEntries:self.weightHistory.weights 
+                            andUnits:getDefaultUnits()];
+     }];
 }
 
 
@@ -73,8 +70,8 @@ static NSString* const UnitsKey = @"defaultUnits";
 {
     [super viewDidUnload];
     
-    [self.weightHistory removeObserver:self forKeyPath:WeightKey];
-    [self.weightHistory removeObserver:self forKeyPath:UnitsKey];
+    [[NSNotificationCenter defaultCenter]
+     removeObserver:self];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -96,13 +93,12 @@ static NSString* const UnitsKey = @"defaultUnits";
                         change:(NSDictionary *)change 
                        context:(void *)context {
     
-    if ([keyPath isEqualToString:WeightKey]|| 
-        [keyPath isEqualToString:UnitsKey]) {
+    if ([keyPath isEqualToString:WeightKey]) {
         
         id graphView = self.view;
         
         [graphView setWeightEntries:self.weightHistory.weights 
-                           andUnits:self.weightHistory.defaultUnits];
+                           andUnits:getDefaultUnits()];
     }
 }
 
