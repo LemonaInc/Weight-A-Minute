@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *weightTextField;
 @property (strong, nonatomic) IBOutlet UILabel *dateLabel;
 @property (strong, nonatomic) UIButton* unitsButton;
+@property (strong, nonatomic) IBOutlet UILabel *saveWarningLabel;
 
 - (IBAction)saveWeight:(id)sender;
 - (IBAction)changeUnits:(id)sender;

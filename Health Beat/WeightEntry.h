@@ -15,7 +15,7 @@ typedef enum {
 
 
 
-@interface WeightEntry : NSObject
+@interface WeightEntry : NSObject <NSCoding>
 
 @property (nonatomic, assign, readonly) CGFloat weightInLbs;
 @property (nonatomic, strong, readonly) NSDate* date;

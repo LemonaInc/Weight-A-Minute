@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		340C102014432FD600F1D711 /* GraphStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 340C101F14432FD600F1D711 /* GraphStats.m */; };
 		340C1024144333E300F1D711 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 340C1023144333E300F1D711 /* GraphView.m */; };
+		341F0B17145073B2001BAB2F /* NSMutableArray+Union.m in Sources */ = {isa = PBXBuildFile; fileRef = 341F0B16145073B2001BAB2F /* NSMutableArray+Union.m */; };
 		343A73C9143FAD13002EB781 /* graph.png in Resources */ = {isa = PBXBuildFile; fileRef = 343A73C5143FAD13002EB781 /* graph.png */; };
 		343A73CA143FAD13002EB781 /* graph@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 343A73C6143FAD13002EB781 /* graph@2x.png */; };
 		343A73CB143FAD13002EB781 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 343A73C7143FAD13002EB781 /* plus.png */; };
@@ -52,6 +53,8 @@
 		340C101F14432FD600F1D711 /* GraphStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphStats.m; sourceTree = "<group>"; };
 		340C1022144333E300F1D711 /* GraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
 		340C1023144333E300F1D711 /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
+		341F0B15145073B2001BAB2F /* NSMutableArray+Union.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Union.h"; sourceTree = "<group>"; };
+		341F0B16145073B2001BAB2F /* NSMutableArray+Union.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Union.m"; sourceTree = "<group>"; };
 		343A73C5143FAD13002EB781 /* graph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graph.png; sourceTree = "<group>"; };
 		343A73C6143FAD13002EB781 /* graph@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "graph@2x.png"; sourceTree = "<group>"; };
 		343A73C7143FAD13002EB781 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
@@ -86,6 +89,7 @@
 		34777100143EC5190010DCAB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		34777102143EC5190010DCAB /* Health_BeatTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Health_BeatTests.h; sourceTree = "<group>"; };
 		34777103143EC5190010DCAB /* Health_BeatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Health_BeatTests.m; sourceTree = "<group>"; };
+		348606A4144F716A00F01BE0 /* Health Beat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Health Beat.entitlements"; sourceTree = "<group>"; };
 		3490AD73143FF1D3006ECA28 /* WeightEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightEntry.h; sourceTree = "<group>"; };
 		3490AD74143FF1D3006ECA28 /* WeightEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightEntry.m; sourceTree = "<group>"; };
 		3490AD77143FF56C006ECA28 /* WeightHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightHistory.h; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 		347770D3143EC5180010DCAB /* Health Beat */ = {
 			isa = PBXGroup;
 			children = (
+				348606A4144F716A00F01BE0 /* Health Beat.entitlements */,
 				347770DC143EC5180010DCAB /* HBAppDelegate.h */,
 				347770DD143EC5180010DCAB /* HBAppDelegate.m */,
 				347770DF143EC5180010DCAB /* MainStoryboard.storyboard */,
@@ -213,6 +218,8 @@
 				3490AD74143FF1D3006ECA28 /* WeightEntry.m */,
 				3490AD77143FF56C006ECA28 /* WeightHistory.h */,
 				3490AD78143FF56C006ECA28 /* WeightHistory.m */,
+				341F0B15145073B2001BAB2F /* NSMutableArray+Union.h */,
+				341F0B16145073B2001BAB2F /* NSMutableArray+Union.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -373,6 +380,7 @@
 				344439CF144285C500B2DEA3 /* HistoryCell.m in Sources */,
 				340C102014432FD600F1D711 /* GraphStats.m in Sources */,
 				340C1024144333E300F1D711 /* GraphView.m in Sources */,
+				341F0B17145073B2001BAB2F /* NSMutableArray+Union.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +480,7 @@
 			buildSettings = {
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CODE_SIGN_ENTITLEMENTS = "Health Beat/Health Beat.entitlements";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Health Beat/Health Beat-Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
@@ -497,6 +506,7 @@
 			buildSettings = {
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
+				CODE_SIGN_ENTITLEMENTS = "Health Beat/Health Beat.entitlements";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Health Beat/Health Beat-Prefix.pch";
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;

@@ -106,4 +106,42 @@ static NSString* const UnitsKey = @"defaultUnits";
     }
 }
 
+#pragma mark - Custom Accessor
+
+- (void)setWeightHistory:(WeightHistory *)weightHistory {
+    
+    
+    // if we're assigning the same history, don't do anything.
+    if ([_weightHistory isEqual:weightHistory]) {
+        return;
+    }
+    
+    // clear any notifications for the old history, if any
+    if (_weightHistory != nil) {
+        [_weightHistory removeObserver:self forKeyPath:WeightKey];
+    }
+    
+    _weightHistory = weightHistory;
+    
+    // add new notifications for the new history, if any
+    // and set the view's values.
+    if (_weightHistory != nil) {
+        
+        
+        [_weightHistory addObserver:self 
+                         forKeyPath:WeightKey 
+                            options:NSKeyValueObservingOptionNew 
+                            context:nil];
+        
+        
+        // if the view is loaded, we need to update it
+        if (self.isViewLoaded) {
+            
+            id graphView = self.view;
+            [graphView setWeightEntries:_weightHistory.weights 
+                               andUnits:getDefaultUnits()];
+        }
+    }
+}
+
 @end

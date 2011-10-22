@@ -16,6 +16,8 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 @property (nonatomic, strong) NSDate* currentDate;
 @property (nonatomic, strong) NSNumberFormatter* numberFormatter;
 
+- (void)updateSaveAndEditStatus
+
 @end
 
 
@@ -26,6 +28,7 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 @synthesize weightTextField = _weightTextField;
 @synthesize dateLabel = _dateLabel;
 @synthesize unitsButton=_unitsButton;
+@synthesize saveWarningLabel = _saveWarningLabel;
 
 @synthesize currentDate = _currentDate;
 @synthesize numberFormatter = _numberFormatter;
@@ -87,7 +90,9 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
                forControlEvents:UIControlEventTouchUpInside];
     
     self.weightTextField.rightView = self.unitsButton;
-    self.weightTextField.rightViewMode = UITextFieldViewModeAlways;    
+    self.weightTextField.rightViewMode = UITextFieldViewModeAlways;   
+    
+    self.saveWarningLabel.alpha = 0.0f;
     
 }
 
@@ -99,6 +104,8 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
     self.unitsButton = nil;
     self.numberFormatter = nil;
     
+    [self setSaveWarning:nil];
+    [self setSaveWarningLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -224,6 +231,66 @@ replacementString:(NSString *)string {
     [self dismissModalViewControllerAnimated:YES];
 }
 
+#pragma mark - Private Methods
+
+- (void)updateSaveAndEditStatus {
+    
+    if (self.weightHistory == nil) {
+        
+        // disable editing
+        [self.weightTextField resignFirstResponder];
+        self.weightTextField.enabled = NO;        
+        return;
+    }
+    
+    UIDocumentState state = 
+    self.weightHistory.documentState;
+    
+    if (state & UIDocumentStateSavingError) {
+        
+        // display save warning
+        [UIView 
+         animateWithDuration:0.25f 
+         animations:^{
+             
+             self.saveWarningLabel.alpha = 1.0f;
+         }];
+        
+    } else {
+        
+        // hide save warning
+        [UIView 
+         animateWithDuration:0.25f 
+         animations:^{
+             
+             self.saveWarningLabel.alpha = 0.0f;
+         }];
+        
+    }
+    
+    if (state & UIDocumentStateEditingDisabled) {
+        
+        // disable editing
+        [self.weightTextField resignFirstResponder];
+        self.weightTextField.enabled = NO;
+        
+    } else {
+        
+        // enable editing
+        self.weightTextField.enabled = YES;
+        [self.weightTextField becomeFirstResponder];
+        
+        // sets the current time and date
+        self.currentDate = [NSDate date];
+        
+        self.dateLabel.text = 
+        [NSDateFormatter 
+         localizedStringFromDate:self.currentDate
+         dateStyle:NSDateFormatterLongStyle 
+         timeStyle:NSDateFormatterShortStyle];
+        
+    }
+}
 
 
 @end

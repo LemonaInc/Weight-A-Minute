@@ -9,20 +9,23 @@
 #import <Foundation/Foundation.h>
 #import "WeightEntry.h"
 
-static NSString* const WeightHistoryChangedDefaultUnitsNotification = 
+static NSString* const WeightHistoryChangedDefaultUnitsNotification =
 @"WeightHistory changed the default units";
 
 static NSString* const KVOWeightChangeKey = @"weightHistory";
 
+@class WeightHistory;
+typedef void (^historyAccessHandler) (BOOL success, WeightHistory* weightHistory);
 
 
-@interface WeightHistory : NSObject
+@interface WeightHistory : UIDocument
 
-// This is a virtual property.
+// this is a virtual property
 @property (nonatomic, readonly) NSArray* weights;
-@property (nonatomic, assign, readwrite) WeightUnit defaultUnits;
 
 - (void)addWeight:(WeightEntry*)weight;
 - (void)removeWeightAtIndex:(NSUInteger)index;
+
++ (void)accessWeightHistory:(historyAccessHandler)completionHandler;
 
 @end

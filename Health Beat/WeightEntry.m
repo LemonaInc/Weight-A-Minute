@@ -11,6 +11,10 @@
 static const CGFloat LBS_PER_KG = 2.20462262f;
 static NSNumberFormatter* formatter;
 
+static NSString* const WeightKey = @"WeightHistoryWeightInLbs";
+static NSString* const DateKey = @"WeightHistoryDate";
+
+
 @implementation WeightEntry
 
 @synthesize weightInLbs = _weightInLbs;
@@ -124,6 +128,26 @@ static NSNumberFormatter* formatter;
                         forDate:referenceDate];
 }
 
+#pragma mark - Serialization
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    
+    self = [super init];
+    if (self) {
+        
+        _weightInLbs = [aDecoder decodeFloatForKey:WeightKey];
+        _date = [aDecoder decodeObjectForKey:DateKey];
+    }
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    
+    [aCoder encodeFloat:self.weightInLbs forKey:WeightKey];
+    [aCoder encodeObject:self.date forKey:DateKey];
+}
+
 #pragma mark - Public Methods
 
 - (CGFloat)weightInUnit:(WeightUnit)unit {
@@ -150,6 +174,5 @@ static NSNumberFormatter* formatter;
     return [WeightEntry stringForWeight:[self weightInUnit:unit] 
                                  ofUnit:unit];
 }
-
 
 @end

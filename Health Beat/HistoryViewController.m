@@ -52,26 +52,10 @@ static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
 
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    // Register to receive KVO messages when the weight history changes.
-    [self.weightHistory addObserver:self 
-                         forKeyPath:KVOWeightChangeKey 
-                            options:NSKeyValueObservingOptionNew
-                            context:nil];
-    
-    // Register to receive messages when the default units change.
-    [[NSNotificationCenter defaultCenter] 
-     addObserver:self 
-     selector:@selector(reloadTableData)
-     name:WeightHistoryChangedDefaultUnitsNotification 
-     object:self.weightHistory]; 
 }
 
 - (void)viewDidUnload
 {
-    [self.weightHistory removeObserver:self
-                            forKeyPath:KVOWeightChangeKey]; 
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [super viewDidUnload];
 }
@@ -266,6 +250,45 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)reloadTableData {
     
     [self.tableView reloadData];
+}
+
+#pragma mark - Custom Accessor
+
+- (void)setWeightHistory:(WeightHistory *)weightHistory {
+    
+    
+    // if we're assiging the same history, don't do anything.
+    if ([_weightHistory isEqual:weightHistory]) {
+        return;
+    }
+    
+    // clear any notifications for the old history, if any
+    if (_weightHistory != nil) {
+        
+        [_weightHistory removeObserver:self
+                            forKeyPath:KVOWeightChangeKey]; 
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    }
+    
+    _weightHistory = weightHistory;
+    
+    // add new notifications for the new history, if nay
+    if (_weightHistory != nil) {
+        
+        // register to receive kvo messages when the weight history changes
+        [_weightHistory addObserver:self 
+                         forKeyPath:KVOWeightChangeKey 
+                            options:NSKeyValueObservingOptionNew
+                            context:nil];
+        
+        
+        // if the view is loaded, we need to update it
+        if (self.isViewLoaded) {
+            
+            [self.tableView reloadData];
+        }
+    }
 }
 
 
