@@ -7,7 +7,6 @@
 //
 
 #import "EnterWeightViewController.h"
-#import "WeightHistory.h"
 
 static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 
@@ -24,7 +23,6 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 
 @implementation EnterWeightViewController
 
-@synthesize weightHistory = _weightHistory;
 @synthesize weightTextField = _weightTextField;
 @synthesize dateLabel = _dateLabel;
 @synthesize unitsButton=_unitsButton;

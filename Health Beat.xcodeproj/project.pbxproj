@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		340C102014432FD600F1D711 /* GraphStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 340C101F14432FD600F1D711 /* GraphStats.m */; };
 		340C1024144333E300F1D711 /* GraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 340C1023144333E300F1D711 /* GraphView.m */; };
-		341F0B17145073B2001BAB2F /* NSMutableArray+Union.m in Sources */ = {isa = PBXBuildFile; fileRef = 341F0B16145073B2001BAB2F /* NSMutableArray+Union.m */; };
 		343A73C9143FAD13002EB781 /* graph.png in Resources */ = {isa = PBXBuildFile; fileRef = 343A73C5143FAD13002EB781 /* graph.png */; };
 		343A73CA143FAD13002EB781 /* graph@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 343A73C6143FAD13002EB781 /* graph@2x.png */; };
 		343A73CB143FAD13002EB781 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 343A73C7143FAD13002EB781 /* plus.png */; };
@@ -34,7 +33,6 @@
 		34777101143EC5190010DCAB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 347770FF143EC5190010DCAB /* InfoPlist.strings */; };
 		34777104143EC5190010DCAB /* Health_BeatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34777103143EC5190010DCAB /* Health_BeatTests.m */; };
 		3490AD75143FF1D3006ECA28 /* WeightEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490AD74143FF1D3006ECA28 /* WeightEntry.m */; };
-		3490AD79143FF56C006ECA28 /* WeightHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490AD78143FF56C006ECA28 /* WeightHistory.m */; };
 		3490AD7F143FFBE8006ECA28 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490AD7E143FFBE8006ECA28 /* TabBarController.m */; };
 		3497201E145274C700B5F70D /* WeightUnits.m in Sources */ = {isa = PBXBuildFile; fileRef = 3497201D145274C700B5F70D /* WeightUnits.m */; };
 		3497202014534C6600B5F70D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3497201F14534C6500B5F70D /* Settings.bundle */; };
@@ -55,8 +53,6 @@
 		340C101F14432FD600F1D711 /* GraphStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphStats.m; sourceTree = "<group>"; };
 		340C1022144333E300F1D711 /* GraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphView.h; sourceTree = "<group>"; };
 		340C1023144333E300F1D711 /* GraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphView.m; sourceTree = "<group>"; };
-		341F0B15145073B2001BAB2F /* NSMutableArray+Union.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Union.h"; sourceTree = "<group>"; };
-		341F0B16145073B2001BAB2F /* NSMutableArray+Union.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Union.m"; sourceTree = "<group>"; };
 		343A73C5143FAD13002EB781 /* graph.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = graph.png; sourceTree = "<group>"; };
 		343A73C6143FAD13002EB781 /* graph@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "graph@2x.png"; sourceTree = "<group>"; };
 		343A73C7143FAD13002EB781 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
@@ -94,8 +90,6 @@
 		348606A4144F716A00F01BE0 /* Health Beat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Health Beat.entitlements"; sourceTree = "<group>"; };
 		3490AD73143FF1D3006ECA28 /* WeightEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightEntry.h; sourceTree = "<group>"; };
 		3490AD74143FF1D3006ECA28 /* WeightEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightEntry.m; sourceTree = "<group>"; };
-		3490AD77143FF56C006ECA28 /* WeightHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightHistory.h; sourceTree = "<group>"; };
-		3490AD78143FF56C006ECA28 /* WeightHistory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightHistory.m; sourceTree = "<group>"; };
 		3490AD7D143FFBE8006ECA28 /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
 		3490AD7E143FFBE8006ECA28 /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
 		3497201C145274C700B5F70D /* WeightUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightUnits.h; sourceTree = "<group>"; };
@@ -222,10 +216,6 @@
 			children = (
 				3490AD73143FF1D3006ECA28 /* WeightEntry.h */,
 				3490AD74143FF1D3006ECA28 /* WeightEntry.m */,
-				3490AD77143FF56C006ECA28 /* WeightHistory.h */,
-				3490AD78143FF56C006ECA28 /* WeightHistory.m */,
-				341F0B15145073B2001BAB2F /* NSMutableArray+Union.h */,
-				341F0B16145073B2001BAB2F /* NSMutableArray+Union.m */,
 				3497201C145274C700B5F70D /* WeightUnits.h */,
 				3497201D145274C700B5F70D /* WeightUnits.m */,
 			);
@@ -383,13 +373,11 @@
 				343A73D5143FB17D002EB781 /* HistoryViewController.m in Sources */,
 				343A73D8143FB1F4002EB781 /* DetailViewController.m in Sources */,
 				3490AD75143FF1D3006ECA28 /* WeightEntry.m in Sources */,
-				3490AD79143FF56C006ECA28 /* WeightHistory.m in Sources */,
 				3490AD7F143FFBE8006ECA28 /* TabBarController.m in Sources */,
 				344439C114416C7A00B2DEA3 /* UnitSelectorViewController.m in Sources */,
 				344439CF144285C500B2DEA3 /* HistoryCell.m in Sources */,
 				340C102014432FD600F1D711 /* GraphStats.m in Sources */,
 				340C1024144333E300F1D711 /* GraphView.m in Sources */,
-				341F0B17145073B2001BAB2F /* NSMutableArray+Union.m in Sources */,
 				3497201E145274C700B5F70D /* WeightUnits.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

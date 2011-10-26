@@ -8,10 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class WeightHistory;
 
 @interface TabBarController : UITabBarController
 
-@property (nonatomic, strong) WeightHistory* weightHistory;
 
 @end
