@@ -7,8 +7,17 @@
 //
 
 #import "TabBarController.h"
+#import <CoreData/CoreData.h>
+
+@interface TabBarController() 
+
+- (void)passDocumentToSubViewControllers;
+
+@end
 
 @implementation TabBarController
+
+@synthesize document = _document;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,57 +48,115 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    
-//    
-//    [WeightHistory accessWeightHistory:
-//     ^(BOOL success, WeightHistory *weightHistory) {
-//         
-//         if (!success) {
-//             
-//             // An error occurred while instantiating our history.
-//             // This probably indicates a catastrophic failure
-//             // (e.g. the device's hard drive is out of space).
-//             // We should really alert the user and tell them to 
-//             // take appropriate action. For now, just throw 
-//             // an exception.
-//             
-//             [NSException 
-//              raise:NSInternalInconsistencyException
-//              format:@"An error occured while trying to "
-//              @"instantiate our history"];
-//             
-//         }
-//         
-//         self.weightHistory = weightHistory;
-//         
-//         // create a stack, and load it with the view 
-//         // controllers from our tabs
-//         NSMutableArray* stack = 
-//         [NSMutableArray arrayWithArray:self.viewControllers];
-//         
-//         // while we still have items on our stack
-//         while ([stack count] > 0) {
-//             
-//             // pop the last item off the stack
-//             id controller = [stack lastObject];
-//             [stack removeLastObject];
-//             
-//             // if it is a container object, add its view 
-//             // controllers to the stack
-//             if ([controller 
-//                  respondsToSelector:@selector(viewControllers)]) {
-//                 
-//                 [stack addObjectsFromArray:[controller viewControllers]];
-//             }
-//             
-//             // if it responds to setWeightHistory, set the weight history
-//             if ([controller 
-//                  respondsToSelector:@selector(setWeightHistory:)]) {
-//                 
-//                 [controller setWeightHistory:self.weightHistory];
-//             }
-//         }   
-//     }];
+    
+    // Override point for customization after application launch.    
+    NSFileManager* fileManager = [NSFileManager defaultManager];
+    NSURL* ubiquitousURL = 
+    [fileManager URLForUbiquityContainerIdentifier:nil];
+    
+    NSDictionary *options;
+    if (ubiquitousURL != nil) {
+        
+        options = [NSDictionary dictionaryWithObjectsAndKeys:
+                   [NSNumber numberWithBool:YES], 
+                   NSMigratePersistentStoresAutomaticallyOption,
+                   [NSNumber numberWithBool:YES], 
+                   NSInferMappingModelAutomaticallyOption, 
+                   @"com.freelancemadscience.Health_Beat.history", 
+                   NSPersistentStoreUbiquitousContentNameKey,
+                   ubiquitousURL, 
+                   NSPersistentStoreUbiquitousContentURLKey, nil];   
+        
+    } else {
+        
+        // Create options for local sandbox storage only
+        options = [NSDictionary dictionaryWithObjectsAndKeys:
+                   [NSNumber numberWithBool:YES], 
+                   NSMigratePersistentStoresAutomaticallyOption,
+                   [NSNumber numberWithBool:YES], 
+                   NSInferMappingModelAutomaticallyOption, nil];   
+        
+    }
+    
+    NSURL* localURL = [fileManager URLForDirectory:NSDocumentDirectory
+                                          inDomain:NSUserDomainMask
+                                 appropriateForURL:nil
+                                            create:NO
+                                             error:nil];
+    
+    NSURL* localCoreDataURL = 
+    [localURL URLByAppendingPathComponent:@"MyData"];
+    
+    // Now Create our document
+    self.document = 
+    [[UIManagedDocument alloc] initWithFileURL:localCoreDataURL];
+    
+    self.document.persistentStoreOptions = options;
+    
+    if ([fileManager fileExistsAtPath:[localCoreDataURL path]]) {
+        
+        [self.document openWithCompletionHandler:
+         ^(BOOL success) {
+            
+             [self passDocumentToSubViewControllers];
+        }];
+        
+    } else {
+        
+        [self.document 
+         saveToURL:localCoreDataURL
+         forSaveOperation:UIDocumentSaveForCreating
+         completionHandler:^(BOOL success) {
+             
+             [self passDocumentToSubViewControllers];
+         }];
+    }
+}
+
+- (void)passDocumentToSubViewControllers {
+
+    // create a stack, and load it with the view 
+    // controllers from our tabs
+    NSMutableArray* stack = 
+    [NSMutableArray arrayWithArray:self.viewControllers];
+    
+    // while we still have items on our stack
+    while ([stack count] > 0) {
+        
+        // pop the last item off the stack
+        id controller = [stack lastObject];
+        [stack removeLastObject];
+        
+        // if it is a container object, add its view 
+        // controllers to the stack
+        if ([controller 
+             respondsToSelector:@selector(viewControllers)]) {
+            
+            [stack addObjectsFromArray:[controller viewControllers]];
+        }
+        
+        // if it responds to setDocument, pass our document
+        if ([controller 
+             respondsToSelector:@selector(setDocument:)]) {
+            
+            [controller setDocument:self.document];
+        }
+    } 
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserverForName:NSPersistentStoreDidImportUbiquitousContentChangesNotification 
+     object:[self.document.managedObjectContext persistentStoreCoordinator]
+     queue:nil
+     usingBlock:^(NSNotification *note) {
+         
+         [self.document.managedObjectContext performBlock:^{
+             
+             NSLog(@"Merging Changes");
+             [self.document.managedObjectContext 
+              mergeChangesFromContextDidSaveNotification:note];
+             
+         }];
+     }];
 }
 
 - (void)viewDidUnload

@@ -2,7 +2,7 @@
 //  WeightEntry.m
 //  Health Beat
 //
-//  Created by Rich Warren on 10/7/11.
+//  Created by Rich Warren on 10/27/11.
 //  Copyright (c) 2011 Freelance Mad Science Labs. All rights reserved.
 //
 
@@ -11,14 +11,27 @@
 static const CGFloat LBS_PER_KG = 2.20462262f;
 static NSNumberFormatter* formatter;
 
-static NSString* const WeightKey = @"WeightHistoryWeightInLbs";
-static NSString* const DateKey = @"WeightHistoryDate";
+@interface WeightEntry()
+
+@property (nonatomic, readwrite, retain) NSDate* date;
+@property (nonatomic, readwrite) float weightInLbs;
+
+@end
 
 
 @implementation WeightEntry
 
-@synthesize weightInLbs = _weightInLbs;
-@synthesize date = _date;
+@dynamic date;
+@dynamic weightInLbs;
+
++ (void)initialize {
+    
+    formatter = [[NSNumberFormatter alloc] init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    [formatter setMinimum:[NSNumber numberWithFloat:0.0f]];
+    [formatter setMaximumFractionDigits:2];
+    
+}
 
 #pragma mark - Conversion Methods
 
@@ -85,69 +98,6 @@ static NSString* const DateKey = @"WeightHistoryDate";
     return [WeightEntry stringForWeight:convertedWeight ofUnit:unit];
 }
 
-#pragma mark - Init Methods
-
-+ (void)initialize {
-    
-    formatter = [[NSNumberFormatter alloc] init];
-    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-    [formatter setMinimum:[NSNumber numberWithFloat:0.0f]];
-    [formatter setMaximumFractionDigits:2];
-    
-}
-
-// Designated initializer.
-- (id) initWithWeight:(CGFloat)weight 
-           usingUnits:(WeightUnit)unit 
-              forDate:(NSDate*)date {
-    
-    self = [super init];
-    if (self) {
-        
-        if (unit == LBS) {
-            _weightInLbs = weight;
-        }
-        else {
-            _weightInLbs = [WeightEntry convertKgToLbs:weight];
-        }
-        
-        _date = date;
-        
-    }
-    
-    return self;
-}
-
-// Must override the superclass’s designated initializer.
-- (id)init {
-    
-    NSDate* referenceDate = [NSDate dateWithTimeIntervalSince1970:0.0f];
-    
-    return [self initWithWeight:0.0f 
-                     usingUnits:LBS 
-                        forDate:referenceDate];
-}
-
-#pragma mark - Serialization
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    
-    self = [super init];
-    if (self) {
-        
-        _weightInLbs = [aDecoder decodeFloatForKey:WeightKey];
-        _date = [aDecoder decodeObjectForKey:DateKey];
-    }
-    
-    return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder {
-    
-    [aCoder encodeFloat:self.weightInLbs forKey:WeightKey];
-    [aCoder encodeObject:self.date forKey:DateKey];
-}
-
 #pragma mark - Public Methods
 
 - (CGFloat)weightInUnit:(WeightUnit)unit {
@@ -172,7 +122,59 @@ static NSString* const DateKey = @"WeightHistoryDate";
 - (NSString*)stringForWeightInUnit:(WeightUnit)unit {
     
     return [WeightEntry stringForWeight:[self weightInUnit:unit] 
-                                 ofUnit:unit];
+                                    ofUnit:unit];
 }
+
+
+#pragma mark - Conveniance Methods
+
++ (NSString*)entityName {
+    return @"WeightEntry";
+}
+
++ (WeightEntry*)addEntryToDocument:(UIManagedDocument*)document
+                  usingWeightInLbs:(CGFloat)weight
+                              date:(NSDate*)date 
+{
+
+    NSManagedObjectContext* context = document.managedObjectContext;
+    
+    NSAssert(context != nil, 
+             @"The managed object context is nil");
+    
+    NSEntityDescription* entity = 
+    [NSEntityDescription entityForName:[WeightEntry entityName]
+                inManagedObjectContext:context];
+    
+    NSAssert1(entity != nil, 
+              @"The entity description for WeightEntry in %@ is nil", 
+              context);
+    
+    
+    WeightEntry* entry = 
+    [[WeightEntry alloc] initWithEntity:entity
+         insertIntoManagedObjectContext:context];
+    
+    entry.weightInLbs = weight;    
+    entry.date = date;
+    
+    // Save a snapshot to the parent context
+    NSError *error = nil;
+    if (![context save:&error]) {
+        
+        // ideally we should replace this with more robust error handling.
+        // However, we're not saving to disk, we're just pushing the change
+        // up to the parent context--so most errors should be
+        // caused by mistakes in our code.
+        [NSException 
+         raise:NSInternalInconsistencyException
+         format:@"An error occurred when saving the context: %@",
+         [error localizedDescription]];
+    }
+    
+    return entry;
+}
+
+
 
 @end

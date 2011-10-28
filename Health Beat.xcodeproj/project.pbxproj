@@ -32,10 +32,12 @@
 		347770F9143EC5190010DCAB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 347770CF143EC5180010DCAB /* Foundation.framework */; };
 		34777101143EC5190010DCAB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 347770FF143EC5190010DCAB /* InfoPlist.strings */; };
 		34777104143EC5190010DCAB /* Health_BeatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34777103143EC5190010DCAB /* Health_BeatTests.m */; };
-		3490AD75143FF1D3006ECA28 /* WeightEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490AD74143FF1D3006ECA28 /* WeightEntry.m */; };
 		3490AD7F143FFBE8006ECA28 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3490AD7E143FFBE8006ECA28 /* TabBarController.m */; };
 		3497201E145274C700B5F70D /* WeightUnits.m in Sources */ = {isa = PBXBuildFile; fileRef = 3497201D145274C700B5F70D /* WeightUnits.m */; };
 		3497202014534C6600B5F70D /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3497201F14534C6500B5F70D /* Settings.bundle */; };
+		3499085E1459BE05005AD6E1 /* WeightHistory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3499085C1459BE05005AD6E1 /* WeightHistory.xcdatamodeld */; };
+		349908611459C34F005AD6E1 /* WeightEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 349908601459C34F005AD6E1 /* WeightEntry.m */; };
+		34990863145A2800005AD6E1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34990862145A27FF005AD6E1 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,13 +90,15 @@
 		34777102143EC5190010DCAB /* Health_BeatTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Health_BeatTests.h; sourceTree = "<group>"; };
 		34777103143EC5190010DCAB /* Health_BeatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Health_BeatTests.m; sourceTree = "<group>"; };
 		348606A4144F716A00F01BE0 /* Health Beat.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Health Beat.entitlements"; sourceTree = "<group>"; };
-		3490AD73143FF1D3006ECA28 /* WeightEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightEntry.h; sourceTree = "<group>"; };
-		3490AD74143FF1D3006ECA28 /* WeightEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightEntry.m; sourceTree = "<group>"; };
 		3490AD7D143FFBE8006ECA28 /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
 		3490AD7E143FFBE8006ECA28 /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
 		3497201C145274C700B5F70D /* WeightUnits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightUnits.h; sourceTree = "<group>"; };
 		3497201D145274C700B5F70D /* WeightUnits.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightUnits.m; sourceTree = "<group>"; };
 		3497201F14534C6500B5F70D /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		3499085D1459BE05005AD6E1 /* WeightHistory.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WeightHistory.xcdatamodel; sourceTree = "<group>"; };
+		3499085F1459C34F005AD6E1 /* WeightEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightEntry.h; sourceTree = "<group>"; };
+		349908601459C34F005AD6E1 /* WeightEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightEntry.m; sourceTree = "<group>"; };
+		34990862145A27FF005AD6E1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,7 @@
 				347770CE143EC5180010DCAB /* UIKit.framework in Frameworks */,
 				347770D0143EC5180010DCAB /* Foundation.framework in Frameworks */,
 				347770D2143EC5180010DCAB /* CoreGraphics.framework in Frameworks */,
+				34990863145A2800005AD6E1 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +130,7 @@
 		347770BE143EC5180010DCAB = {
 			isa = PBXGroup;
 			children = (
+				34990862145A27FF005AD6E1 /* CoreData.framework */,
 				347770D3143EC5180010DCAB /* Health Beat */,
 				347770FC143EC5190010DCAB /* Health BeatTests */,
 				347770CC143EC5180010DCAB /* Frameworks */,
@@ -214,10 +220,11 @@
 		3477710E143EC9840010DCAB /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				3490AD73143FF1D3006ECA28 /* WeightEntry.h */,
-				3490AD74143FF1D3006ECA28 /* WeightEntry.m */,
 				3497201C145274C700B5F70D /* WeightUnits.h */,
 				3497201D145274C700B5F70D /* WeightUnits.m */,
+				3499085C1459BE05005AD6E1 /* WeightHistory.xcdatamodeld */,
+				3499085F1459C34F005AD6E1 /* WeightEntry.h */,
+				349908601459C34F005AD6E1 /* WeightEntry.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -372,13 +379,14 @@
 				343A73D2143FB042002EB781 /* GraphViewController.m in Sources */,
 				343A73D5143FB17D002EB781 /* HistoryViewController.m in Sources */,
 				343A73D8143FB1F4002EB781 /* DetailViewController.m in Sources */,
-				3490AD75143FF1D3006ECA28 /* WeightEntry.m in Sources */,
 				3490AD7F143FFBE8006ECA28 /* TabBarController.m in Sources */,
 				344439C114416C7A00B2DEA3 /* UnitSelectorViewController.m in Sources */,
 				344439CF144285C500B2DEA3 /* HistoryCell.m in Sources */,
 				340C102014432FD600F1D711 /* GraphStats.m in Sources */,
 				340C1024144333E300F1D711 /* GraphView.m in Sources */,
 				3497201E145274C700B5F70D /* WeightUnits.m in Sources */,
+				3499085E1459BE05005AD6E1 /* WeightHistory.xcdatamodeld in Sources */,
+				349908611459C34F005AD6E1 /* WeightEntry.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,6 +598,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3499085C1459BE05005AD6E1 /* WeightHistory.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3499085D1459BE05005AD6E1 /* WeightHistory.xcdatamodel */,
+			);
+			currentVersion = 3499085D1459BE05005AD6E1 /* WeightHistory.xcdatamodel */;
+			path = WeightHistory.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 347770C0143EC5180010DCAB /* Project object */;
 }

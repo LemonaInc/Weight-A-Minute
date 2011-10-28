@@ -12,7 +12,7 @@
 
 @interface DetailViewController : UITableViewController
 
-@property (nonatomic, strong) WeightHistory* weightHistory;
+@property (nonatomic, strong) NSArray* weightHistory;
 @property (nonatomic, assign) NSUInteger selectedIndex;
 
 

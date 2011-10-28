@@ -7,6 +7,7 @@
 //
 
 #import "EnterWeightViewController.h"
+#import "WeightEntry.h"
 
 static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 
@@ -30,6 +31,8 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 
 @synthesize currentDate = _currentDate;
 @synthesize numberFormatter = _numberFormatter;
+
+@synthesize document = _document;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -154,16 +157,22 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 
 - (IBAction)saveWeight:(id)sender {
     
-    // Save the weight to the model.
-    NSNumber* weight = [self.numberFormatter
-                        numberFromString:self.weightTextField.text];
+    CGFloat weight = 
+    [[self.numberFormatter 
+      numberFromString:self.weightTextField.text] 
+     floatValue];
     
-    WeightEntry* entry = [[WeightEntry alloc] 
-                          initWithWeight:[weight floatValue] 
-                          usingUnits:getDefaultUnits()
-                          forDate:self.currentDate];
     
-    [self.weightHistory addWeight:entry];
+    if (getDefaultUnits() != LBS) {
+        
+        weight = [WeightEntry convertKgToLbs:weight];
+    }
+    
+    // This creates a new weight entry and adds
+    // it to our document's managed object context
+    [WeightEntry addEntryToDocument:self.document
+                   usingWeightInLbs:weight
+                               date:self.currentDate];
     
     // Automatically move to the second tab.
     // Should be the graph view.
@@ -249,36 +258,36 @@ replacementString:(NSString *)string {
 
 #pragma mark - Custom Accessor
 
-- (void)setWeightHistory:(WeightHistory *)weightHistory {
+- (void)setDocument:(UIManagedDocument *)document {
     
     NSNotificationCenter* notificationCenter = 
     [NSNotificationCenter defaultCenter];
     
     // if we're assiging the same history, don't do anything.
-    if ([_weightHistory isEqual:weightHistory]) {
+    if ([_document isEqual:document]) {
         return;
     }
     
     // clear any notifications for the old history, if any
-    if (_weightHistory != nil) {
+    if (_document != nil) {
         
         [notificationCenter 
          removeObserver:self 
          forKeyPath:UIDocumentStateChangedNotification];
     }
     
-    _weightHistory = weightHistory;
+    _document = document;
     
     // add new notifications for the new history, if any
     // and set the view's values.
-    if (_weightHistory != nil) {
+    if (_document != nil) {
         
         // register for notifications
         [notificationCenter
          addObserver:self
          selector:@selector(updateSaveAndEditStatus)
          name:UIDocumentStateChangedNotification 
-         object:_weightHistory];
+         object:_document];
         
         // update our save and edit status
         [self updateSaveAndEditStatus];
@@ -289,7 +298,7 @@ replacementString:(NSString *)string {
 
 - (void)updateSaveAndEditStatus {
     
-    if (self.weightHistory == nil) {
+    if (self.document == nil) {
         
         // disable editing
         [self.weightTextField resignFirstResponder];
@@ -298,7 +307,7 @@ replacementString:(NSString *)string {
     }
     
     UIDocumentState state = 
-    self.weightHistory.documentState;
+    self.document.documentState;
     
     if (state & UIDocumentStateSavingError) {
         

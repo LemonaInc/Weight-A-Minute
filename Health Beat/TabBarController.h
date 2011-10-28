@@ -11,5 +11,6 @@
 
 @interface TabBarController : UITabBarController
 
+@property (strong, nonatomic) UIManagedDocument* document;
 
 @end

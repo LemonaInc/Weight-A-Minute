@@ -7,25 +7,28 @@
 //
 
 #import "HistoryViewController.h"
-#import "WeightHistory.h"
 #import "DetailViewController.h"
 #import "HistoryCell.h"
+#import "WeightEntry.h"
 
 static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
 
 @interface HistoryViewController()
 
+@property (nonatomic, retain) NSFetchedResultsController* 
+fetchedResultsController;
+
+- (void)instantiateFetchedResultsController;
+
 - (void)reloadTableData;
-- (void)weightHistoryChanged:(NSDictionary*) change;
 
 @end
 
 
-
-
 @implementation HistoryViewController
 
-@synthesize weightHistory = _weightHistory;
+@synthesize document = _document;
+@synthesize fetchedResultsController = _fetchedResultsController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -58,7 +61,6 @@ static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
      selector:@selector(reloadTableData)
      name:NSUserDefaultsDidChangeNotification 
      object:[NSUserDefaults standardUserDefaults]];
-    
 }
 
 - (void)viewDidUnload
@@ -102,16 +104,15 @@ static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    
-    // We only have a single section
-    return 1;
+    return [[self.fetchedResultsController sections] count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    id <NSFetchedResultsSectionInfo> sectionInfo = 
+    [[self.fetchedResultsController sections] objectAtIndex:section];
     
-    // Return the number of entries in our weight history
-    return [self.weightHistory.weights count];
+    return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView 
@@ -123,7 +124,7 @@ static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
     [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     WeightEntry* entry = 
-    [self.weightHistory.weights objectAtIndex:indexPath.row];
+    [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     [cell configureWithWeightEntry:entry 
                       defaultUnits:getDefaultUnits()];
@@ -145,9 +146,29 @@ commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+                
+        WeightEntry* entry = 
+        [self.fetchedResultsController objectAtIndexPath:indexPath];
         
         
-        [self.weightHistory removeWeightAtIndex:indexPath.row];
+        // Delete the managed object for the given index path
+        NSManagedObjectContext *context = 
+        [self.fetchedResultsController managedObjectContext];
+        
+        [context deleteObject:entry];
+        
+        NSError* error;
+        if (![context save:&error]) {
+            
+            // ideally we should replace this with more robust error handling.
+            // However, we're not saving to disk, we're just pushing the change
+            // up to the parent context--so most errors should be
+            // caused by mistakes in our code.
+            [NSException 
+             raise:NSInternalInconsistencyException
+             format:@"An error occurred when saving the context: %@",
+             [error localizedDescription]];
+        }
     } 
 }
 
@@ -175,7 +196,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         NSIndexPath* path = [self.tableView indexPathForSelectedRow];
         DetailViewController* controller = segue.destinationViewController;
         
-        controller.weightHistory = self.weightHistory;
+        controller.weightHistory = 
+        self.fetchedResultsController.fetchedObjects;
         controller.selectedIndex = path.row;
     }
 }
@@ -193,72 +215,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
      */
 }
 
-#pragma mark - Notification Methods
-
-- (void)observeValueForKeyPath:(NSString *)keyPath 
-                      ofObject:(id)object 
-                        change:(NSDictionary *)change 
-                       context:(void *)context   {
-    
-    if ([keyPath isEqualToString:KVOWeightChangeKey]) {
-        
-        [self weightHistoryChanged:change];
-    }
-}
-
-- (void)weightHistoryChanged:(NSDictionary*) change {
-    
-    // First extract the kind of change.
-    NSNumber* value = [change objectForKey:NSKeyValueChangeKindKey];
-    
-    // Next, get the indexes that changed.
-    NSIndexSet* indexes = 
-    [change objectForKey:NSKeyValueChangeIndexesKey];
-    
-    NSMutableArray* indexPaths = 
-    [[NSMutableArray alloc] initWithCapacity:[indexes count]];
-    
-    // Use a block to process each index.
-    [indexes enumerateIndexesUsingBlock:
-     ^(NSUInteger indexValue, BOOL* stop) {
-         
-         NSIndexPath* indexPath = 
-         [NSIndexPath indexPathForRow:indexValue inSection:0];
-         
-         [indexPaths addObject:indexPath];
-     }];
-    
-    // Now update the table.
-    switch ([value intValue]) {
-            
-        case NSKeyValueChangeInsertion:
-            
-            // Insert the row.
-            [self.tableView insertRowsAtIndexPaths:indexPaths
-                                  withRowAnimation:UITableViewRowAnimationAutomatic];
-            
-            break;
-            
-        case NSKeyValueChangeRemoval:
-            
-            // Delete the row.
-            [self.tableView deleteRowsAtIndexPaths:indexPaths 
-                                  withRowAnimation:UITableViewRowAnimationAutomatic];
-            
-            break;
-            
-        case NSKeyValueChangeSetting:
-            [self.tableView reloadData];
-            break;
-            
-        default:
-            [NSException raise:NSInvalidArgumentException 
-                        format:@"Change kind value %d not recognized", 
-             [value intValue]];
-            
-    }
-}
-
 - (void)reloadTableData {
     
     [self.tableView reloadData];
@@ -271,7 +227,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     // only respond to shake events
     if (event.type == UIEventSubtypeMotionShake) {
         
-        [self.weightHistory undo];
+        [self.document.undoManager undo];
     }
 }
 
@@ -279,36 +235,144 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
 
+#pragma mark - Private Methods
+
+- (void)instantiateFetchedResultsController {
+    
+    // Create the fetch request
+    NSFetchRequest *fetchRequest = 
+    [NSFetchRequest fetchRequestWithEntityName:[WeightEntry entityName]];
+    
+    // Set the batch size
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Set up sort descriptor
+    NSSortDescriptor *sortDescriptor = 
+    [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
+    
+    NSArray *sortDescriptors = 
+    [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    // nil for section name key path means "no sections".
+    self.fetchedResultsController = 
+    [[NSFetchedResultsController alloc]
+     initWithFetchRequest:fetchRequest
+     managedObjectContext:self.document.managedObjectContext
+     sectionNameKeyPath:nil 
+     cacheName:@"History View"];
+    
+    self.fetchedResultsController.delegate = self;
+    
+    NSError *error = nil;
+    if (![self.fetchedResultsController performFetch:&error])
+    {
+        // We may want more thorough error checking; however,
+        // at this point, the main cause for errors tends be
+        // invalid keys in the sort descriptor. Let's fail fast
+        // so we're sure to catch that during development.
+        
+        [NSException 
+         raise:NSInternalInconsistencyException
+         format:@"An error occurred when performing our fetch %@",
+         [error localizedDescription]];
+    }
+}
+
+#pragma mark - Fetched results controller delegate
+
+- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView beginUpdates];
+}
+
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    [self.tableView endUpdates];
+}
+
+- (void)controller:(NSFetchedResultsController *)controller 
+   didChangeObject:(id)anObject
+       atIndexPath:(NSIndexPath *)indexPath 
+     forChangeType:(NSFetchedResultsChangeType)type
+      newIndexPath:(NSIndexPath *)newIndexPath
+{
+    UITableView *tableView = self.tableView;
+    
+    WeightEntry* entry;
+    HistoryCell* cell;
+    
+    switch(type)
+    {
+            
+        case NSFetchedResultsChangeInsert:
+            [tableView 
+             insertRowsAtIndexPaths:
+             [NSArray arrayWithObject:newIndexPath]
+             withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+            
+        case NSFetchedResultsChangeDelete:
+            [tableView 
+             deleteRowsAtIndexPaths:
+             [NSArray arrayWithObject:indexPath]
+             withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+            
+        case NSFetchedResultsChangeUpdate:
+            
+            entry = 
+            [self.fetchedResultsController 
+             objectAtIndexPath:indexPath];
+            
+            cell = (HistoryCell*) 
+            [self.tableView 
+             cellForRowAtIndexPath:indexPath];
+            
+            [cell configureWithWeightEntry:entry 
+                              defaultUnits:getDefaultUnits()];
+            
+            break;
+            
+        case NSFetchedResultsChangeMove:
+            [tableView 
+             deleteRowsAtIndexPaths:
+             [NSArray arrayWithObject:indexPath]
+             withRowAnimation:UITableViewRowAnimationAutomatic];
+            
+            [tableView 
+             insertRowsAtIndexPaths:
+             [NSArray arrayWithObject:newIndexPath]
+             withRowAnimation:UITableViewRowAnimationAutomatic];
+            break;
+    }
+}
+
+
+    
 #pragma mark - Custom Accessor
 
-- (void)setWeightHistory:(WeightHistory *)weightHistory {
+- (void)setDocument:(UIManagedDocument *)document {
     
     
     // if we're assiging the same history, don't do anything.
-    if ([_weightHistory isEqual:weightHistory]) {
+    if ([_document isEqual:document]) {
         return;
     }
     
-    // clear any notifications for the old history, if any
-    if (_weightHistory != nil) {
+    // remove any old fetched results controller
+    if (_document != nil) {
         
-        [_weightHistory removeObserver:self
-                            forKeyPath:KVOWeightChangeKey]; 
-        
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
+        self.fetchedResultsController = nil;
     }
     
-    _weightHistory = weightHistory;
+    _document = document;
     
     // add new notifications for the new history, if nay
-    if (_weightHistory != nil) {
-        
-        // register to receive kvo messages when the weight history changes
-        [_weightHistory addObserver:self 
-                         forKeyPath:KVOWeightChangeKey 
-                            options:NSKeyValueObservingOptionNew
-                            context:nil];
-        
+    if (_document != nil) {
+
+        [self instantiateFetchedResultsController];
         
         // if the view is loaded, we need to update it
         if (self.isViewLoaded) {

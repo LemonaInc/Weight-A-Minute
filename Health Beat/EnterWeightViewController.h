@@ -17,6 +17,8 @@
 @property (strong, nonatomic) UIButton* unitsButton;
 @property (strong, nonatomic) IBOutlet UILabel *saveWarningLabel;
 
+@property (strong, nonatomic) UIManagedDocument* document;
+
 - (IBAction)saveWeight:(id)sender;
 - (IBAction)changeUnits:(id)sender;
 - (IBAction)handleDownwardSwipe:(id)sender;

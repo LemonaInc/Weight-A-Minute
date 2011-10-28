@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@class WeightHistory;
 
 @interface GraphViewController : UIViewController
 
-@property (strong, nonatomic) WeightHistory* weightHistory;
+@property (strong, nonatomic) UIManagedDocument* document;
 
 @end

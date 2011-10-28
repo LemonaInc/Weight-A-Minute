@@ -8,13 +8,20 @@
 
 #import "GraphViewController.h"
 #import "GraphView.h"
-#import "WeightHistory.h"
+#import "WeightEntry.h"
 
-static NSString* const WeightKey = @"weights";
+@interface GraphViewController()
+
+@property (strong, nonatomic) NSArray* weightHistory;
+
+@end
+
 
 @implementation GraphViewController
 
+@synthesize document = _document;
 @synthesize weightHistory = _weightHistory;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,7 +57,7 @@ static NSString* const WeightKey = @"weights";
     
     id graphView = self.view;    
     
-    [graphView setWeightEntries:self.weightHistory.weights 
+    [graphView setWeightEntries:self.weightHistory 
                        andUnits:getDefaultUnits()];
     
     // register to recieve notifications when the default unit changes
@@ -60,7 +67,7 @@ static NSString* const WeightKey = @"weights";
      queue:nil
      usingBlock:^(NSNotification *note) {
          
-         [graphView setWeightEntries:self.weightHistory.weights 
+         [graphView setWeightEntries:self.weightHistory 
                             andUnits:getDefaultUnits()];
      }];
 }
@@ -86,55 +93,106 @@ static NSString* const WeightKey = @"weights";
     [self.view setNeedsDisplay];
 }
 
-#pragma mark - Notification Methods
-
-- (void)observeValueForKeyPath:(NSString *)keyPath 
-                      ofObject:(id)object 
-                        change:(NSDictionary *)change 
-                       context:(void *)context {
-    
-    if ([keyPath isEqualToString:WeightKey]) {
-        
-        id graphView = self.view;
-        
-        [graphView setWeightEntries:self.weightHistory.weights 
-                           andUnits:getDefaultUnits()];
-    }
-}
-
 #pragma mark - Custom Accessor
 
-- (void)setWeightHistory:(WeightHistory *)weightHistory {
+- (void)setDocument:(UIManagedDocument*)document {
+
+    NSNotificationCenter* center = 
+    [NSNotificationCenter defaultCenter];
     
     
     // if we're assigning the same history, don't do anything.
-    if ([_weightHistory isEqual:weightHistory]) {
+    if ([_document isEqual:document]) {
         return;
     }
     
     // clear any notifications for the old history, if any
-    if (_weightHistory != nil) {
-        [_weightHistory removeObserver:self forKeyPath:WeightKey];
+    if (_document != nil) {
+        
+        [center 
+         removeObserver:self
+         name:NSManagedObjectContextObjectsDidChangeNotification
+         object:self.document.managedObjectContext];
     }
     
-    _weightHistory = weightHistory;
+    _document = document;
     
     // add new notifications for the new history, if any
     // and set the view's values.
-    if (_weightHistory != nil) {
+    if (_document != nil) {
+        
+        // Create the fetch request
+        NSFetchRequest *fetchRequest = 
+        [NSFetchRequest fetchRequestWithEntityName:[WeightEntry entityName]];
+        
+        // Set up sort descriptor
+        NSSortDescriptor *sortDescriptor = 
+        [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
+        
+        NSArray *sortDescriptors = 
+        [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+        
+        [fetchRequest setSortDescriptors:sortDescriptors];
+        
+        NSError* error;
+        self.weightHistory = 
+        [self.document.managedObjectContext 
+         executeFetchRequest:fetchRequest
+         error:&error];
+        
+        if (self.weightHistory == nil) {
+            
+            // We may want more thorough error checking; however,
+            // at this point, the main cause for errors tends be
+            // invalid keys in the sort descriptor. Let's fail fast
+            // so we're sure to catch that during development.
+            
+            [NSException 
+             raise:NSInternalInconsistencyException
+             format:@"An error occurred when performing our fetch %@",
+             [error localizedDescription]];
+        }
         
         
-        [_weightHistory addObserver:self 
-                         forKeyPath:WeightKey 
-                            options:NSKeyValueObservingOptionNew 
-                            context:nil];
-        
-        
+        [center 
+         addObserverForName:NSManagedObjectContextObjectsDidChangeNotification
+         object:self.document.managedObjectContext
+         queue:nil 
+         usingBlock:^(NSNotification* notification) {
+             
+             NSError* fetchError;
+             self.weightHistory = 
+             [self.document.managedObjectContext 
+              executeFetchRequest:fetchRequest
+              error:&fetchError];
+             
+             if (self.weightHistory == nil) {
+                 
+                 // We may want more thorough error checking; however,
+                 // at this point, the main cause for errors tends be
+                 // invalid keys in the sort descriptor. Let's fail fast
+                 // so we're sure to catch that during development.
+                 
+                 [NSException 
+                  raise:NSInternalInconsistencyException
+                  format:@"An error occurred when performing our fetch %@",
+                  [fetchError localizedDescription]];
+             }
+             
+             // if the view is loaded, we need to update it
+             if (self.isViewLoaded) {
+                 
+                 id graphView = self.view;
+                 [graphView setWeightEntries:self.weightHistory 
+                                    andUnits:getDefaultUnits()];
+             }
+         }];
+          
         // if the view is loaded, we need to update it
         if (self.isViewLoaded) {
             
             id graphView = self.view;
-            [graphView setWeightEntries:_weightHistory.weights 
+            [graphView setWeightEntries:self.weightHistory 
                                andUnits:getDefaultUnits()];
         }
     }

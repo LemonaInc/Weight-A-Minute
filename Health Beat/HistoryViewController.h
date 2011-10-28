@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
-@class WeightHistory;
 
-@interface HistoryViewController : UITableViewController
+@interface HistoryViewController : UITableViewController <NSFetchedResultsControllerDelegate> 
 
-@property (strong, nonatomic) WeightHistory* weightHistory;
+@property (strong, nonatomic) UIManagedDocument* document;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "DetailViewController.h"
-#import "WeightHistory.h"
+#import "WeightEntry.h"
 
 @implementation DetailViewController
 
@@ -68,7 +68,7 @@
     WeightUnit unit = getDefaultUnits();
     
     WeightEntry* currentEntry = 
-    [self.weightHistory.weights objectAtIndex:self.selectedIndex];
+    [self.weightHistory objectAtIndex:self.selectedIndex];
     
     CGFloat weight = [currentEntry weightInUnit:unit];
     
@@ -87,7 +87,7 @@
     int monthlyCount = 0;
     CGFloat monthlyTotal = 0.0f;
     
-    for (WeightEntry* entry in self.weightHistory.weights) {
+    for (WeightEntry* entry in self.weightHistory) {
         
         CGFloat sampleWeight = [entry weightInUnit:unit];
         
