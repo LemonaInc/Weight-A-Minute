@@ -12,6 +12,7 @@
 #import "WeightEntry.h"
 
 static NSString* const DetailViewSegueIdentifier = @"Push Detail View";
+static NSString* const EnterWeightViewSegueIdentifier = @"Push Enter Weight View";
 
 @interface HistoryViewController()
 
@@ -190,7 +191,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 */
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    
+        
     if ([segue.identifier isEqualToString:DetailViewSegueIdentifier]) {
         
         NSIndexPath* path = [self.tableView indexPathForSelectedRow];
@@ -199,6 +200,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         controller.weightHistory = 
         self.fetchedResultsController.fetchedObjects;
         controller.selectedIndex = path.row;
+    }
+    
+    if ([segue.identifier isEqualToString:
+         EnterWeightViewSegueIdentifier]) {
+        
+        [segue.destinationViewController 
+         setDocument:self.document];
     }
 }
 

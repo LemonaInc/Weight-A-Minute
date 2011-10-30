@@ -14,6 +14,9 @@
 
 @property (strong, nonatomic) NSArray* weightHistory;
 
+@property (strong, nonatomic) UIPopoverController* 
+historyPopoverController;
+
 @end
 
 
@@ -21,6 +24,7 @@
 
 @synthesize document = _document;
 @synthesize weightHistory = _weightHistory;
+@synthesize historyPopoverController = _historyPopoverController;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -196,6 +200,28 @@
                                andUnits:getDefaultUnits()];
         }
     }
+}
+
+#pragma mark - Split View Controller Delegate Methods
+
+- (void)splitViewController:(UISplitViewController *)splitController 
+     willHideViewController:(UIViewController *)viewController 
+          withBarButtonItem:(UIBarButtonItem *)barButtonItem 
+       forPopoverController:(UIPopoverController *)popoverController
+{
+    barButtonItem.title = @"History";
+    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
+    self.historyPopoverController = popoverController;
+}
+
+- (void)splitViewController:(UISplitViewController *)splitController 
+     willShowViewController:(UIViewController *)viewController 
+  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    // Called when the view is shown again in the split view, 
+    // invalidating the button and popover controller.
+    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    self.historyPopoverController = nil;
 }
 
 @end

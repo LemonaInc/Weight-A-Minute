@@ -64,7 +64,7 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     self.numberFormatter = [[NSNumberFormatter alloc] init];
     [self.numberFormatter  setNumberStyle:NSNumberFormatterDecimalStyle];
     [self.numberFormatter  setMinimum:[NSNumber numberWithFloat:0.0f]];
@@ -177,6 +177,7 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
     // Automatically move to the second tab.
     // Should be the graph view.
     self.tabBarController.selectedIndex = 1;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)changeUnits:(id)sender {
@@ -239,6 +240,7 @@ replacementString:(NSString *)string {
         unitSelectorController.delegate = self;
         unitSelectorController.defaultUnit = 
         getDefaultUnits();
+    
     }
 }
 

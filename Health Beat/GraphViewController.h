@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface GraphViewController : UIViewController
+@interface GraphViewController : UIViewController  <UISplitViewControllerDelegate>
 
 @property (strong, nonatomic) UIManagedDocument* document;
 
