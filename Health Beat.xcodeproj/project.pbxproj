@@ -40,6 +40,7 @@
 		3499085E1459BE05005AD6E1 /* WeightHistory.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3499085C1459BE05005AD6E1 /* WeightHistory.xcdatamodeld */; };
 		349908611459C34F005AD6E1 /* WeightEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 349908601459C34F005AD6E1 /* WeightEntry.m */; };
 		34990863145A2800005AD6E1 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34990862145A27FF005AD6E1 /* CoreData.framework */; };
+		34A23363145DD7A2002995DB /* WeightEntryClassMethodsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 34A23362145DD7A2002995DB /* WeightEntryClassMethodsTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,8 @@
 		3499085F1459C34F005AD6E1 /* WeightEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightEntry.h; sourceTree = "<group>"; };
 		349908601459C34F005AD6E1 /* WeightEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightEntry.m; sourceTree = "<group>"; };
 		34990862145A27FF005AD6E1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		34A23361145DD7A2002995DB /* WeightEntryClassMethodsTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeightEntryClassMethodsTests.h; sourceTree = "<group>"; };
+		34A23362145DD7A2002995DB /* WeightEntryClassMethodsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeightEntryClassMethodsTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,7 +138,6 @@
 		347770BE143EC5180010DCAB = {
 			isa = PBXGroup;
 			children = (
-				34990862145A27FF005AD6E1 /* CoreData.framework */,
 				347770D3143EC5180010DCAB /* Health Beat */,
 				347770FC143EC5190010DCAB /* Health BeatTests */,
 				347770CC143EC5180010DCAB /* Frameworks */,
@@ -155,6 +157,7 @@
 		347770CC143EC5180010DCAB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				34990862145A27FF005AD6E1 /* CoreData.framework */,
 				344439C31442514800B2DEA3 /* QuartzCore.framework */,
 				347770CD143EC5180010DCAB /* UIKit.framework */,
 				347770CF143EC5180010DCAB /* Foundation.framework */,
@@ -196,6 +199,8 @@
 		347770FC143EC5190010DCAB /* Health BeatTests */ = {
 			isa = PBXGroup;
 			children = (
+				34A23361145DD7A2002995DB /* WeightEntryClassMethodsTests.h */,
+				34A23362145DD7A2002995DB /* WeightEntryClassMethodsTests.m */,
 				34777102143EC5190010DCAB /* Health_BeatTests.h */,
 				34777103143EC5190010DCAB /* Health_BeatTests.m */,
 				347770FD143EC5190010DCAB /* Supporting Files */,
@@ -405,6 +410,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				34777104143EC5190010DCAB /* Health_BeatTests.m in Sources */,
+				34A23363145DD7A2002995DB /* WeightEntryClassMethodsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
