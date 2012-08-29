@@ -70,7 +70,7 @@
     WeightEntry* currentEntry = 
     [self.weightHistory objectAtIndex:self.selectedIndex];
     
-    CGFloat weight = [currentEntry weightInUnit:unit];
+    CGFloat weight = [currentEntry weightInLbs];
     
     // If the entry is within the same month.
     NSDate* startOfMonth;
@@ -89,7 +89,7 @@
     
     for (WeightEntry* entry in self.weightHistory) {
         
-        CGFloat sampleWeight = [entry weightInUnit:unit];
+        CGFloat sampleWeight = [entry weightInLbs];
         
         if (sampleWeight < minWeight) minWeight = sampleWeight;
         if (sampleWeight > maxWeight) maxWeight = sampleWeight;
