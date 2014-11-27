@@ -14,7 +14,7 @@
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
-			<string>Weights</string>
+			<string>Select Weight Unit</string>
 			<key>Key</key>
 			<string>weight_unit</string>
 			<key>Titles</key>

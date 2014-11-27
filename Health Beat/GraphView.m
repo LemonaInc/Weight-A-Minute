@@ -1,11 +1,10 @@
 //
-//  GraphView.m
-//  Health Beat
+//  HWMainViewController.h
+//  Super Health
 //
-//  Created by Rich Warren on 10/10/11.
-//  Copyright (c) 2011 Freelance Mad Science Labs. All rights reserved.
+//  Created by Jaxon Stevens on 2013-01-20.
+//  Copyright (c) 2013 Jaxon Stevens. All rights reserved.
 //
-
 #import "GraphView.h"
 #import "GraphStats.h"
 
@@ -79,26 +78,26 @@
     
     _units = LBS;
     
-    _margin = 5.0f;
-    _cornerRadius = CGSizeMake(20.0f, 20.0f);
+    _margin = 0.5f;
+    _cornerRadius = CGSizeMake(0.0f, 0.0f);
     
     _graphBorderColor = [UIColor blackColor];
-    _graphFillColor = [UIColor lightGrayColor];
-    _graphBorderWidth = 2.0f;
+    _graphFillColor = [UIColor blackColor];
+    _graphBorderWidth = 1.0f;
     
-    _gridColor = [UIColor colorWithRed:0.0f 
-                                 green:1.0f 
-                                  blue:1.0f 
+    _gridColor = [UIColor colorWithRed:1.0f
+                                 green:1.0f
+                                  blue:1.0f
                                  alpha:1.0f];
     
-    _gridSquareSize = 20.0f;
-    _gridLineWidth = 0.25f;
+    _gridSquareSize = 40.0f;
+    _gridLineWidth = 0.40f;
     _trendLineColor = [UIColor redColor];
     _trendLineWidth = 4.0f;
     _referenceLineColor = [UIColor lightTextColor];
     _referenceLineWidth = 1.0f;
     _textColor = [UIColor lightTextColor];
-    _fontSize = 10.0f;
+    _fontSize = 20.0f;
 }
 
 #pragma mark - Setting the weight data
@@ -123,12 +122,12 @@
     CGRect innerBounds = 
     CGRectInset(self.bounds, self.margin, self.margin);
     
+  
     // Fill in the rounded rectangle.
-    UIBezierPath* graphBorder = 
+    UIBezierPath* graphBorder =
     [UIBezierPath bezierPathWithRoundedRect:innerBounds
-                          byRoundingCorners:UIRectCornerAllCorners 
+                          byRoundingCorners:UIRectCornerAllCorners
                                 cornerRadii:self.cornerRadius];
-    
     
     [self.graphFillColor setFill];
     [graphBorder fill];

@@ -1,9 +1,9 @@
 //
-//  WeightEntryClassMethodsTests.m
-//  Health Beat
+//  HWMainViewController.h
+//  Super Health
 //
-//  Created by Rich Warren on 10/30/11.
-//  Copyright (c) 2011 Freelance Mad Science Labs. All rights reserved.
+//  Created by Jaxon Stevens on 2013-01-20.
+//  Copyright (c) 2013 Jaxon Stevens. All rights reserved.
 //
 
 #import "WeightEntryClassMethodsTests.h"

@@ -1,9 +1,9 @@
 //
-//  EnterWeightViewController.m
-//  Health Beat
+//  HWMainViewController.h
+//  Super Health
 //
-//  Created by Rich Warren on 10/7/11.
-//  Copyright (c) 2011 Freelance Mad Science Labs. All rights reserved.
+//  Created by Jaxon Stevens on 2013-01-20.
+//  Copyright (c) 2013 Jaxon Stevens. All rights reserved.
 //
 
 #import "EnterWeightViewController.h"
@@ -54,44 +54,44 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 #pragma mark - View lifecycle
 
 /*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView
-{
-}
-*/
+ // Implement loadView to create a view hierarchy programmatically, without using a nib.
+ - (void)loadView
+ {
+ }
+ */
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-        
+    
     self.numberFormatter = [[NSNumberFormatter alloc] init];
     [self.numberFormatter  setNumberStyle:NSNumberFormatterDecimalStyle];
     [self.numberFormatter  setMinimum:[NSNumber numberWithFloat:0.0f]];
     
     self.unitsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.unitsButton.frame = CGRectMake(0.0f, 0.0f, 25.0f, 17.0f);
-    self.unitsButton.backgroundColor = [UIColor lightGrayColor];
+    self.unitsButton.backgroundColor = [UIColor clearColor];
     
-    self.unitsButton.titleLabel.font = [UIFont boldSystemFontOfSize:12.0f];
+    self.unitsButton.titleLabel.font = [UIFont boldSystemFontOfSize:17.0f];
     self.unitsButton.titleLabel.textAlignment = UITextAlignmentCenter;
     
-    [self.unitsButton setTitle:@"lbs" 
+    [self.unitsButton setTitle:@"lbs"
                       forState:UIControlStateNormal];
     
-    [self.unitsButton setTitleColor:[UIColor darkGrayColor] 
+    [self.unitsButton setTitleColor:[UIColor redColor]
                            forState:UIControlStateNormal];
     
-    [self.unitsButton setTitleColor:[UIColor blueColor] 
+    [self.unitsButton setTitleColor:[UIColor blackColor]
                            forState:UIControlStateHighlighted];
     
     
-    [self.unitsButton addTarget:self 
+    [self.unitsButton addTarget:self
                          action:@selector(changeUnits:)
                forControlEvents:UIControlEventTouchUpInside];
     
     self.weightTextField.rightView = self.unitsButton;
-    self.weightTextField.rightViewMode = UITextFieldViewModeAlways;   
+    self.weightTextField.rightViewMode = UITextFieldViewModeAlways;
     
     self.saveWarningLabel.alpha = 0.0f;
     
@@ -128,7 +128,7 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-
+    
     return YES;
 }
 
@@ -137,17 +137,17 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
     // Sets the current time and date.
     self.currentDate = [NSDate date];
     
-    self.dateLabel.text = 
+    self.dateLabel.text =
     [NSDateFormatter localizedStringFromDate:self.currentDate
-                                   dateStyle:NSDateFormatterLongStyle 
+                                   dateStyle:NSDateFormatterLongStyle
                                    timeStyle:NSDateFormatterShortStyle];
     
     // Clear the text field.
     self.weightTextField.text = @"";
     [self.weightTextField becomeFirstResponder];
     
-    [self.unitsButton 
-     setTitle:[WeightEntry stringForUnit:getDefaultUnits()] 
+    [self.unitsButton
+     setTitle:[WeightEntry stringForUnit:getDefaultUnits()]
      forState:UIControlStateNormal];
     
     [super viewWillAppear:animated];
@@ -157,9 +157,9 @@ static NSString* const UNIT_SELECTOR_SEGUE = @"Unit Selector Segue";
 
 - (IBAction)saveWeight:(id)sender {
     
-    CGFloat weight = 
-    [[self.numberFormatter 
-      numberFromString:self.weightTextField.text] 
+    CGFloat weight =
+    [[self.numberFormatter
+      numberFromString:self.weightTextField.text]
      floatValue];
     
     
@@ -207,14 +207,14 @@ replacementString:(NSString *)string {
     if ([string isEqualToString:@"\n"]) return YES;
     
     
-    NSString* changedString = 
-    [textField.text stringByReplacingCharactersInRange:range 
+    NSString* changedString =
+    [textField.text stringByReplacingCharactersInRange:range
                                             withString:string];
     
     // It's OK to delete everything.
     if ([changedString isEqualToString:@""]) return YES;
     
-    NSNumber* number = 
+    NSNumber* number =
     [self.numberFormatter numberFromString:changedString];
     
     // Filter out invalid number formats.
@@ -234,23 +234,23 @@ replacementString:(NSString *)string {
     
     if ([segue.identifier isEqualToString:UNIT_SELECTOR_SEGUE]) {
         
-        UnitSelectorViewController* unitSelectorController = 
+        UnitSelectorViewController* unitSelectorController =
         segue.destinationViewController;
         
         unitSelectorController.delegate = self;
-        unitSelectorController.defaultUnit = 
+        unitSelectorController.defaultUnit =
         getDefaultUnits();
-    
+        
     }
 }
 
--(void)unitSelector:(UnitSelectorViewController*) sender 
+-(void)unitSelector:(UnitSelectorViewController*) sender
        changedUnits:(WeightUnit)unit {
     
     setDefaultUnits(unit);
     
     [self.unitsButton setTitle: [WeightEntry stringForUnit:unit]
-                      forState:UIControlStateNormal];    
+                      forState:UIControlStateNormal];
 }
 
 -(void)unitSelectorDone:(UnitSelectorViewController*) sender {
@@ -262,7 +262,7 @@ replacementString:(NSString *)string {
 
 - (void)setDocument:(UIManagedDocument *)document {
     
-    NSNotificationCenter* notificationCenter = 
+    NSNotificationCenter* notificationCenter =
     [NSNotificationCenter defaultCenter];
     
     // if we're assiging the same history, don't do anything.
@@ -273,8 +273,8 @@ replacementString:(NSString *)string {
     // clear any notifications for the old history, if any
     if (_document != nil) {
         
-        [notificationCenter 
-         removeObserver:self 
+        [notificationCenter
+         removeObserver:self
          forKeyPath:UIDocumentStateChangedNotification];
     }
     
@@ -288,7 +288,7 @@ replacementString:(NSString *)string {
         [notificationCenter
          addObserver:self
          selector:@selector(updateSaveAndEditStatus)
-         name:UIDocumentStateChangedNotification 
+         name:UIDocumentStateChangedNotification
          object:_document];
         
         // update our save and edit status
@@ -304,18 +304,18 @@ replacementString:(NSString *)string {
         
         // disable editing
         [self.weightTextField resignFirstResponder];
-        self.weightTextField.enabled = NO;        
+        self.weightTextField.enabled = NO;
         return;
     }
     
-    UIDocumentState state = 
+    UIDocumentState state =
     self.document.documentState;
     
     if (state & UIDocumentStateSavingError) {
         
         // display save warning
-        [UIView 
-         animateWithDuration:0.25f 
+        [UIView
+         animateWithDuration:0.25f
          animations:^{
              
              self.saveWarningLabel.alpha = 1.0f;
@@ -324,8 +324,8 @@ replacementString:(NSString *)string {
     } else {
         
         // hide save warning
-        [UIView 
-         animateWithDuration:0.25f 
+        [UIView
+         animateWithDuration:0.25f
          animations:^{
              
              self.saveWarningLabel.alpha = 0.0f;
@@ -348,14 +348,46 @@ replacementString:(NSString *)string {
         // sets the current time and date
         self.currentDate = [NSDate date];
         
-        self.dateLabel.text = 
-        [NSDateFormatter 
+        self.dateLabel.text =
+        [NSDateFormatter
          localizedStringFromDate:self.currentDate
-         dateStyle:NSDateFormatterLongStyle 
+         dateStyle:NSDateFormatterLongStyle
          timeStyle:NSDateFormatterShortStyle];
         
     }
 }
+
+#pragma mark IAD Delegate Methods
+
+-(void)bannerViewDidLoadAd:(ADBannerView *)banner {
+    
+    [UIView beginAnimations:nil context:nil];
+    
+    [UIView setAnimationDuration:1];
+    
+    [banner setAlpha:1];
+    
+    [UIView commitAnimations];
+    
+}
+
+-(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    
+    [UIView beginAnimations:nil context:nil];
+    
+    [UIView setAnimationDuration:1];
+    
+    [banner setAlpha:0];
+    
+    [UIView commitAnimations];
+    
+}
+
+
+
+
+
+
 
 
 @end

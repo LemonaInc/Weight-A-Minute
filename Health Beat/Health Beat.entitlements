@@ -4,13 +4,13 @@
 <dict>
 	<key>com.apple.developer.ubiquity-container-identifiers</key>
 	<array>
-		<string>$(TeamIdentifierPrefix)com.freelancemadscience.Health-Beat</string>
+		<string>$(TeamIdentifierPrefix)SuperHealth</string>
 	</array>
 	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
-	<string>$(TeamIdentifierPrefix)com.freelancemadscience.Health-Beat</string>
+	<string>$(TeamIdentifierPrefix)SuperHealth</string>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.freelancemadscience.Health-Beat</string>
+		<string>$(AppIdentifierPrefix)SuperHealth</string>
 	</array>
 </dict>
 </plist>

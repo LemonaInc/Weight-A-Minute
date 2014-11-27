@@ -1,9 +1,9 @@
 //
-//  GraphViewController.m
-//  Health Beat
+//  HWMainViewController.h
+//  Super Health
 //
-//  Created by Rich Warren on 10/7/11.
-//  Copyright (c) 2011 Freelance Mad Science Labs. All rights reserved.
+//  Created by Jaxon Stevens on 2013-01-20.
+//  Copyright (c) 2013 Jaxon Stevens. All rights reserved.
 //
 
 #import "GraphViewController.h"
@@ -222,6 +222,32 @@ historyPopoverController;
     // invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     self.historyPopoverController = nil;
+}
+
+#pragma mark IAD Delegate Methods
+
+-(void)bannerViewDidLoadAd:(ADBannerView *)banner {
+    
+    [UIView beginAnimations:nil context:nil];
+    
+    [UIView setAnimationDuration:1];
+    
+    [banner setAlpha:1];
+    
+    [UIView commitAnimations];
+    
+}
+
+-(void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    
+    [UIView beginAnimations:nil context:nil];
+    
+    [UIView setAnimationDuration:1];
+    
+    [banner setAlpha:0];
+    
+    [UIView commitAnimations];
+    
 }
 
 @end

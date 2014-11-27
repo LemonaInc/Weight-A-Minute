@@ -1,9 +1,9 @@
 //
 //  HBAppDelegate.m
-//  Health Beat
+//  Super Health
 //
-//  Created by Rich Warren on 10/7/11.
-//  Copyright (c) 2011 Freelance Mad Science Labs. All rights reserved.
+//  Created by Jaxon Stevens on 2013-01-20.
+//  Copyright (c) 2013 Jaxon Stevens. All rights reserved.
 //
 
 #import "HBAppDelegate.h"
@@ -54,6 +54,17 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [store synchronize];
     
     return YES;
+    
+    [Pushbots getInstance];
+    
+    NSDictionary * userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(userInfo) {
+        // Notification Message
+        NSString* notificationMsg = [userInfo valueForKey:@"message"];
+        // Custom Field
+        NSString* title = [userInfo valueForKey:@"title"];
+        NSLog(@"Notification Msg is %@ and Custom field title = %@", notificationMsg , title);
+    }
 }
 
 							
@@ -85,6 +96,23 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     [[NSUbiquitousKeyValueStore defaultStore] synchronize];
+}
+
+-(void)onReceivePushNotification:(NSDictionary *) pushDict andPayload:(NSDictionary *)payload {
+    [payload valueForKey:@"title"];
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"New Alert !" message:[pushDict valueForKey:@"alert"] delegate:self cancelButtonTitle:@"Thanks !" otherButtonTitles: @"Open",nil];
+    [message show];
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *title = [alertView buttonTitleAtIndex:buttonIndex];
+    if([title isEqualToString:@"Open"]) {
+        [[Pushbots getInstance] OpenedNotification];
+        // set Badge to 0
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+        // reset badge on the server
+        [[Pushbots getInstance] resetBadgeCount];
+    }
 }
 
 @end
